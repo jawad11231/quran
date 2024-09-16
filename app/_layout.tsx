@@ -2,10 +2,10 @@ import "@/global.css";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
-import { SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack, Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { Platform } from "react-native";
+import { I18nManager, Platform, View } from "react-native";
 import { NAV_THEME } from "@/lib/constants";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { PortalHost } from "@rn-primitives/portal";
@@ -14,6 +14,9 @@ import { useFonts } from "expo-font";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import RNAppRestart from "@brandingbrand/react-native-app-restart";
+import * as Updates from "expo-updates";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +40,16 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+
+  // I18nManager.allowRTL(true);
+  // I18nManager.forceRTL(true);
+  const shouldBeRTL = true;
+
+  if (shouldBeRTL !== I18nManager.isRTL && Platform.OS !== "web") {
+    I18nManager.allowRTL(shouldBeRTL);
+    I18nManager.forceRTL(shouldBeRTL);
+    // Updates.reloadAsync();
+  }
 
   const [fontsLoaded, fontError] = useFonts({
     "HelveticaNeueLTArabic-Bold": require("../assets/fonts/HelveticaNeueLTArabic-Bold.ttf"),
@@ -80,20 +93,10 @@ export default function RootLayout() {
       <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
         <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
         {/* <SafeAreaView> */}
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            statusBarColor: "#352F44",
-            contentStyle: {
-              padding: 0,
-              margin: 0,
-              backgroundColor: colorScheme === "dark" ? "#352F44" : "white",
-            },
-            animation: "slide_from_bottom",
-          }}
-        />
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+        </Stack>
         <PortalHost />
-        {/* </SafeAreaView> */}
       </ThemeProvider>
     </QueryClientProvider>
   );
