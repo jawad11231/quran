@@ -17,6 +17,7 @@ import Swiper from "react-native-swiper";
 import PagerView from "react-native-pager-view";
 import SlideItem from "@/components/SlideItem";
 import Pagination from "@/components/Pagination";
+import { HeaderAzkar } from "@/components/HeaderAzkar";
 
 const AzkarCategory = () => {
   const local = useLocalSearchParams();
@@ -58,6 +59,7 @@ const AzkarCategory = () => {
 
   return (
     <SafeAreaView className="flex h-full items-center justify-between bg-white">
+      <HeaderAzkar title={local.category as string} />
       <View className="h-full">
         <View>
           <FlatList

@@ -92,9 +92,18 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
         <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-        {/* <SafeAreaView> */}
-        <Stack>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            statusBarColor: "#352F44",
+            contentStyle: {
+              backgroundColor: colorScheme === "dark" ? "#352F44" : "white",
+            },
+          }}
+        >
           <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
         </Stack>
         <PortalHost />
       </ThemeProvider>
