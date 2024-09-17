@@ -7,9 +7,12 @@ import {
   Animated,
   Easing,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { Azkar } from "@/types";
+// import { Progress } from "./ui/progress";
+import * as Progress from "react-native-progress";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -19,6 +22,7 @@ interface SlideItemProps {
 
 const SlideItem = ({ item }: SlideItemProps) => {
   const translateYImage = new Animated.Value(40);
+  const [completeCount, setCompleteCount] = React.useState(0);
 
   Animated.timing(translateYImage, {
     toValue: 0,
@@ -34,7 +38,39 @@ const SlideItem = ({ item }: SlideItemProps) => {
         <Text style={styles.description}>{item.description}</Text>
         <Text style={styles.reference}>{item.reference}</Text>
       </View>
-      {item.count && <Text style={styles.count}>{item.count}</Text>}
+      {item.count !== 0 && <Text style={styles.count}>{item.count}</Text>}
+      {item.count !== 0 && (
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              if (completeCount < item.count) {
+                setCompleteCount(completeCount + 1);
+              }
+            }}
+          >
+            <Progress.Circle
+              progress={completeCount / item.count}
+              size={120}
+              indeterminate={false}
+              showsText={true}
+              formatText={() =>
+                completeCount === 0 ? `${item.count}` : `${completeCount}`
+              }
+              //   fill={item.count === completeCount ? "#16a34a" : "transparent"}
+              //   textStyle={{
+              //     color: item.count === completeCount ? "white" : "black",
+              //   }}
+              //   formatText={() => `${completeCount}/${item.count}`}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };

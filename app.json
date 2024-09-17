@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "vallv",
-    "slug": "vallv",
+    "name": "quran",
+    "slug": "quran",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -49,6 +49,6 @@
     "updates": {
       "url": "https://u.expo.dev/148098d1-7e19-4326-9814-dd661a192776"
     },
-    "owner": "vallv"
+    "owner": "quran"
   }
 }
