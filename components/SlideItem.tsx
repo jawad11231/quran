@@ -76,14 +76,12 @@ const SlideItem = ({ item, itemLength, data }: SlideItemProps) => {
             className={cn(
               "",
               item.zekr.match(/\d+/g)
-                ? "text-2xl font-amiriQuranColored"
-                : "font-semibold"
+                ? "text-2xl font-amiriBold"
+                : "font-normal"
             )}
           >
-            {/* chaek if there is number then but this number inside U+06DD this is mean end of ayay */}
-            {/* {item.zekr.match(/\d+/g)} */}
             {item.zekr}
-            {/* {item.zekr.replace(/\d+/g, `${item.zekr.match(/\d+/g)}\u06DD`)} */}
+            {/* ۝255 */}
           </Text>
           <Text style={styles.description}>{item.description}</Text>
           <Text style={styles.reference}>({item.reference})</Text>
