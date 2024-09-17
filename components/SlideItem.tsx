@@ -38,10 +38,15 @@ const SlideItem = ({ item }: SlideItemProps) => {
         <Text style={styles.description}>{item.description}</Text>
         <Text style={styles.reference}>{item.reference}</Text>
       </View>
-      {item.count !== 0 && <Text style={styles.count}>{item.count}</Text>}
+      {/* {item.count !== 0 && <Text style={styles.count}>{item.count}</Text>} */}
       {item.count !== 0 && (
         <View
           style={{
+            // position: "absolute",
+            // bottom: 0,
+            // left: 0,
+            // right: 0,
+            // top: 150,
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
@@ -56,9 +61,10 @@ const SlideItem = ({ item }: SlideItemProps) => {
           >
             <Progress.Circle
               progress={completeCount / item.count}
-              size={120}
+              size={80}
               indeterminate={false}
               showsText={true}
+              textStyle={{ fontSize: 40, fontWeight: "semibold" }}
               formatText={() =>
                 completeCount === 0 ? `${item.count}` : `${completeCount}`
               }
@@ -82,10 +88,11 @@ const styles = StyleSheet.create({
     width,
     height,
     // alignItems: "center",
-    padding: 20,
+    // paddingVertical: 14,
     textAlign: "right",
-    // flexDirection: "column",
-    // justifyContent: "space-between",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   image: {
     flex: 0.6,

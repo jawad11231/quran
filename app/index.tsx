@@ -15,6 +15,7 @@ import { getCategories } from "@/services/CategoryService";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 // TODO: add types in a types file
 export interface Ayah {
