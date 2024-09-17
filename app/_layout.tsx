@@ -56,6 +56,12 @@ export default function RootLayout() {
     "HelveticaNeueLTArabic-Roman": require("../assets/fonts/HelveticaNeueLTArabic-Roman.ttf"),
     "HelveticaNeueLTArabic-Light": require("../assets/fonts/HelveticaNeueLTArabic-Light.ttf"),
     UthmanicHafs: require("../assets/fonts/UthmanicHafs.ttf"),
+    "amiri-bold": require("../assets/fonts/amiri-bold.ttf"),
+    "amiri-regular": require("../assets/fonts/amiri-regular.ttf"),
+    "amiri-slanted": require("../assets/fonts/amiri-slanted.ttf"),
+    "amiri-boldslanted": require("../assets/fonts/amiri-boldslanted.ttf"),
+    "amiri-quran": require("../assets/fonts/amiri-quran.ttf"),
+    "amiri-quran-colored": require("../assets/fonts/amiri-quran-colored.ttf"),
   });
 
   React.useEffect(() => {

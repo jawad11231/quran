@@ -3,50 +3,50 @@ import { Text } from "react-native";
 import { router } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
+import { ArrowBigDown, ChevronRight } from "lucide-react-native";
 
-export function HeaderAzkar({ title }: { title?: string }) {
+export const HeaderAzkar = ({ title }: { title: string }) => {
   const { colorScheme } = useColorScheme();
 
   return (
-    <View className="flex flex-row justify-between pl-4 py-4 h-[8%] bg-white dark:bg-darkBg items-center">
-      <View className="inline-flex flex-row items-center justify-center h-full">
+    <View className="flex flex-row justify-between py-2 h-[5.5%] items-center border-b border-border mb-4">
+      <View className="inline-flex flex-row items-center justify-center h-full ">
         <Pressable
-          onPress={() => {
-            router.back();
-          }}
-          className="  items-center justify-end !w-10 flex-3 "
+          className="pl-4"
+          // onPress={() => {
+          //   if (layout === "ayat") {
+          //     storage.set("view_pref", "page");
+          //     setLayout?.("page");
+          //   } else {
+          //     setLayout?.("ayat");
+          //     storage.set("view_pref", "ayat");
+          //   }
+          // }}
         >
-          <AntDesign
-            name="arrowright"
+          <Feather
+            name="list"
             size={24}
-            className="rotate-180"
             color={colorScheme === "dark" ? "#FAF0E6" : "#544981"}
           />
         </Pressable>
       </View>
-      <Pressable className="bg-white dark:bg-darkBg items-center h-10 inline-flex justify-center">
-        <Text className="font-HelveticaRoman text-lg text-primary dark:text-primaryDark text-center">
-          {title}
-        </Text>
-      </Pressable>
+      <View className="flex justify-center items-center text-center ">
+        <Text className="font-semibold text-lg text-center">{title}</Text>
+      </View>
       <Pressable
-        className=" w-24 pr-4  h-32  inline-flex justify-center"
-        // onPress={() => {
-        //   if (layout === "ayat") {
-        //     storage.set("view_pref", "page");
-        //     setLayout?.("page");
-        //   } else {
-        //     setLayout?.("ayat");
-        //     storage.set("view_pref", "ayat");
-        //   }
-        // }}
+        onPress={() => {
+          router.back();
+        }}
+        className="pr-2"
       >
-        <Feather
-          name="list"
+        <ChevronRight
           size={24}
+          className=""
           color={colorScheme === "dark" ? "#FAF0E6" : "#544981"}
         />
       </Pressable>
     </View>
   );
-}
+};
+
+export default HeaderAzkar;

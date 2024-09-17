@@ -18,6 +18,7 @@ import PagerView from "react-native-pager-view";
 import SlideItem from "@/components/SlideItem";
 import Pagination from "@/components/Pagination";
 import { HeaderAzkar } from "@/components/HeaderAzkar";
+import { BottomAzkar } from "@/components/BottomAzkar";
 
 const AzkarCategory = () => {
   const local = useLocalSearchParams();
@@ -58,13 +59,15 @@ const AzkarCategory = () => {
   ).current;
 
   return (
-    <SafeAreaView className="flex h-full items-center justify-between bg-white">
+    <SafeAreaView className="">
       <HeaderAzkar title={local.category as string} />
       <View className="h-full">
         <View>
           <FlatList
             data={data}
-            renderItem={({ item }) => <SlideItem item={item} />}
+            renderItem={({ item }) => (
+              <SlideItem item={item} itemLength={data?.length} data={data} />
+            )}
             horizontal
             pagingEnabled
             snapToAlignment="center"

@@ -22,6 +22,14 @@ module.exports = {
       //   IBMMedium: ["IBM-Medium", "sans-serif"],
       //   IBMSemiBold: ["IBM-SemiBold", "sans-serif"],
       // },
+      fontFamily: {
+        amiriBold: ["amiri-bold"],
+        amiriRegular: ["amiri-regular"],
+        amiriSlanted: ["amiri-slanted"],
+        amiriBoldslanted: ["amiri-boldslanted"],
+        amiriQuran: ["amiri-quran"],
+        amiriQuranColored: ["amiri-quran-colored"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
