@@ -55,7 +55,6 @@ export default function RootLayout() {
     "HelveticaNeueLTArabic-Bold": require("../assets/fonts/HelveticaNeueLTArabic-Bold.ttf"),
     "HelveticaNeueLTArabic-Roman": require("../assets/fonts/HelveticaNeueLTArabic-Roman.ttf"),
     "HelveticaNeueLTArabic-Light": require("../assets/fonts/HelveticaNeueLTArabic-Light.ttf"),
-    UthmanicHafs: require("../assets/fonts/UthmanicHafs.ttf"),
     "amiri-bold": require("../assets/fonts/amiri-bold.ttf"),
     "amiri-regular": require("../assets/fonts/amiri-regular.ttf"),
     "amiri-slanted": require("../assets/fonts/amiri-slanted.ttf"),
