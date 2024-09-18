@@ -74,17 +74,16 @@ const SlideItem = ({ item, itemLength, data }: SlideItemProps) => {
           <Text
             style={styles.title}
             className={cn(
-              "",
-              item.zekr.match(/\d+/g)
-                ? "text-2xl font-amiriBold"
-                : "font-normal"
+              "w-max h-max text-4xl",
+              item.zekr.match(/\d+/g) ? "font-amiriQuran" : "font-normal "
             )}
           >
             {item.zekr}
-            {/* ۝255 */}
           </Text>
           <Text style={styles.description}>{item.description}</Text>
-          <Text style={styles.reference}>({item.reference})</Text>
+          {item.reference !== "" && (
+            <Text style={styles.reference}>({item.reference})</Text>
+          )}
           {item.count !== 0 && (
             <View className="border-t border-border flex justify-center items-center p-2 mt-4">
               <Text
@@ -142,7 +141,7 @@ export default SlideItem;
 
 const styles = StyleSheet.create({
   container: {
-    width,
+    width: "100%",
     height: "100%",
     // alignItems: "center",
     padding: 14,
@@ -164,8 +163,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    height: "auto",
-    width: "auto",
     fontWeight: "semibold",
     color: "#333",
     textAlign: "right",
