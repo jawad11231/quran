@@ -18,7 +18,6 @@ import PagerView from "react-native-pager-view";
 import SlideItem from "@/components/SlideItem";
 import Pagination from "@/components/Pagination";
 import { HeaderAzkar } from "@/components/HeaderAzkar";
-import { BottomAzkar } from "@/components/BottomAzkar";
 
 const AzkarCategory = () => {
   const local = useLocalSearchParams();
