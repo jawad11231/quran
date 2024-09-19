@@ -15,6 +15,11 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { getLocales } from "expo-localization";
+// import i18n, { changeLanguage } from "@/i18n";
+import * as Updates from "expo-updates";
+import i18n from "@/i18n/i18n";
+import { useTranslation } from "react-i18next";
 
 // TODO: add types in a types file
 export interface Ayah {
@@ -53,6 +58,8 @@ const Azkar = () => {
   //   staleTime: Infinity,
   // });
 
+  const { t } = useTranslation("home");
+
   const { data, isLoading } = useQuery(
     "category",
     async () => getCategories(),
@@ -74,6 +81,20 @@ const Azkar = () => {
   return (
     <SafeAreaView className="flex h-full w-full items-center ">
       <ScrollView>
+        <View>
+          <Text>{t("title")}</Text>
+          <Text className="rtl:text-right ltr:text-left">
+            Current locale: {i18n.language}
+          </Text>
+          <Text>Device locale: {getLocales()[0].languageCode}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              i18n.changeLanguage(i18n.language === "ar" ? "en" : "ar");
+            }}
+          >
+            <Text>ar or en</Text>
+          </TouchableOpacity>
+        </View>
         <View>
           <View className="flex flex-row flex-wrap gap-4 w-full px-1 justify-center pb-20">
             {/* max items in flex-row 2 */}

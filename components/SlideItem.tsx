@@ -15,6 +15,9 @@ import { Azkar } from "@/types";
 // import { Progress } from "./ui/progress";
 import * as Progress from "react-native-progress";
 import { cn } from "@/lib/utils";
+import { ChevronLeft, RotateCcw } from "lucide-react-native";
+import { Button } from "./ui/button";
+import Swiper from "react-native-swiper";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -22,9 +25,17 @@ interface SlideItemProps {
   item: Azkar;
   itemLength?: number;
   data?: Azkar[];
+  scrollX: Animated.Value;
+  handleOnScroll: (event: any) => void;
 }
 
-const SlideItem = ({ item, itemLength, data }: SlideItemProps) => {
+const SlideItem = ({
+  item,
+  itemLength,
+  data,
+  handleOnScroll,
+  scrollX,
+}: SlideItemProps) => {
   const translateYImage = new Animated.Value(40);
   const [completeCount, setCompleteCount] = React.useState(0);
   const [opening, setOpening] = React.useState<string | null>(null);
@@ -76,7 +87,6 @@ const SlideItem = ({ item, itemLength, data }: SlideItemProps) => {
       }}
     >
       <TouchableWithoutFeedback
-        // TODO: MAYBE HERE
         onPress={() => {
           if (completeCount < item.count) {
             setCompleteCount(completeCount + 1);
@@ -91,7 +101,7 @@ const SlideItem = ({ item, itemLength, data }: SlideItemProps) => {
               }}
             >
               {opening && (
-                <Text style={styles.opening} key={opening}>
+                <Text className="text-right text-xl" key={opening}>
                   {opening}
                 </Text>
               )}
@@ -99,10 +109,10 @@ const SlideItem = ({ item, itemLength, data }: SlideItemProps) => {
             <Text
               // style={styles.title}
               className={cn(
-                "w-max h-max text-2xl text-right",
+                "text-xl text-right ",
                 item.zekr.match(/\d+/g)
-                  ? "font-amiriQuran"
-                  : "font-normal text-xl"
+                  ? "font-amiriRegular leading-loose"
+                  : "font-normal"
               )}
             >
               {item.zekr}
@@ -133,10 +143,13 @@ const SlideItem = ({ item, itemLength, data }: SlideItemProps) => {
           width: "100%",
           borderTopColor: "#E5E7EB",
           borderTopWidth: 1,
+          // backgroundColor: "#F3F4F6",
         }}
       >
         <View className="flex flex-row justify-between items-center p-4">
-          <Text>ff</Text>
+          <Text>
+            {itemLength && data && `${data.indexOf(item) + 1}/${itemLength}`}
+          </Text>
           <Text>ff</Text>
           <View>
             {item.count !== 0 && (
@@ -154,21 +167,39 @@ const SlideItem = ({ item, itemLength, data }: SlideItemProps) => {
                     }
                   }}
                 >
-                  <Progress.Circle
-                    progress={completeCount / item.count}
-                    size={80}
-                    indeterminate={false}
-                    showsText={true}
-                    textStyle={{ fontSize: 40, fontWeight: "semibold" }}
-                    formatText={() => completeCount}
-                    fill="white"
-                  />
+                  <View className="bg-white rounded-full">
+                    <Progress.Circle
+                      progress={completeCount / item.count}
+                      size={80}
+                      indeterminate={false}
+                      showsText={true}
+                      textStyle={{ fontSize: 40, fontWeight: "semibold" }}
+                      formatText={() => completeCount}
+                      // fill="white"
+                      className="bg-white"
+                      borderWidth={1}
+                    />
+                  </View>
                 </TouchableWithoutFeedback>
               </View>
             )}
           </View>
-          <Text>ff</Text>
-          <Text>ff</Text>
+          <TouchableOpacity
+            onPress={() => {
+              if (data) {
+                scrollX.setValue(width * (data.length - 1));
+              }
+            }}
+          >
+            <ChevronLeft size={20} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setCompleteCount(0);
+            }}
+          >
+            <RotateCcw size={20} color="black" />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -182,7 +213,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     // alignItems: "center",
-    padding: 14,
+    padding: 16,
     textAlign: "right",
     flex: 1,
     flexDirection: "column",
@@ -193,11 +224,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 0.4,
-  },
-  opening: {
-    fontSize: 20,
-    color: "#333",
-    textAlign: "right",
   },
   title: {
     fontSize: 20,

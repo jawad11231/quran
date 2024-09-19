@@ -12,10 +12,23 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "extra": {
+      "router": {
+        "origin": false,
+        "supportsRTL": true,
+        "forcesRTL": true
+      },
+      "eas": {
+        "projectId": "148098d1-7e19-4326-9814-dd661a192776"
+      }
+    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gluestack.expoapp"
+      "bundleIdentifier": "com.gluestack.expoapp",
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,19 +42,13 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
+    "locales": {
+      "ar": "./i18n/locales/ar.json",
+      "en": "./i18n/locales/en.json"
+    },
     "plugins": ["expo-router", "expo-font", "expo-localization"],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false,
-        "supportsRTL": true,
-        "forcesRTL": true
-      },
-      "eas": {
-        "projectId": "148098d1-7e19-4326-9814-dd661a192776"
-      }
     },
     "runtimeVersion": {
       "policy": "appVersion"

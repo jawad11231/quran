@@ -31,14 +31,15 @@ export const HeaderAzkar = ({ title }: { title: string }) => {
         </Pressable>
       </View>
       <View className="flex justify-center items-center text-center ">
-        <Text className="font-semibold text-lg text-center">{title}</Text>
+        <Text className="font-semibold text-lg text-center pl-9">{title}</Text>
       </View>
       <Pressable
         onPress={() => {
           router.back();
         }}
-        className="pr-2"
+        className="pr-2 flex flex-row gap-1 items-center"
       >
+        <Text>اذكار</Text>
         <ChevronRight
           size={24}
           className=""

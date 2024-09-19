@@ -17,6 +17,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import RNAppRestart from "@brandingbrand/react-native-app-restart";
 import * as Updates from "expo-updates";
+import { getLocales } from "expo-localization";
+import i18n from "@/i18n/i18n";
 
 const queryClient = new QueryClient();
 
@@ -41,15 +43,17 @@ export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
 
-  // I18nManager.allowRTL(true);
-  // I18nManager.forceRTL(true);
-  const shouldBeRTL = true;
-
-  if (shouldBeRTL !== I18nManager.isRTL && Platform.OS !== "web") {
-    I18nManager.allowRTL(shouldBeRTL);
-    I18nManager.forceRTL(shouldBeRTL);
-    // Updates.reloadAsync();
-  }
+  // const {
+  //   languageTag,
+  //   languageCode,
+  //   textDirection,
+  //   digitGroupingSeparator,
+  //   decimalSeparator,
+  //   measurementSystem,
+  //   currencyCode,
+  //   currencySymbol,
+  //   regionCode,
+  // } = getLocales()[0];
 
   const [fontsLoaded, fontError] = useFonts({
     "HelveticaNeueLTArabic-Bold": require("../assets/fonts/HelveticaNeueLTArabic-Bold.ttf"),

@@ -65,7 +65,13 @@ const AzkarCategory = () => {
           <FlatList
             data={data}
             renderItem={({ item }) => (
-              <SlideItem item={item} itemLength={data?.length} data={data} />
+              <SlideItem
+                item={item}
+                itemLength={data?.length}
+                data={data}
+                handleOnScroll={handleOnScroll}
+                scrollX={scrollX}
+              />
             )}
             horizontal
             pagingEnabled
