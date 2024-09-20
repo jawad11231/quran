@@ -13,15 +13,6 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
-      // fontFamily: {
-      //   IBM: ["IBM", "sans-serif"],
-      //   IBMBold: ["IBM-Bold", "sans-serif"],
-      //   IBMExtraBold: ["IBM-ExtraBold", "sans-serif"],
-      //   IBMExtraLight: ["IBM-ExtraLight", "sans-serif"],
-      //   IBMLight: ["IBM-Light", "sans-serif"],
-      //   IBMMedium: ["IBM-Medium", "sans-serif"],
-      //   IBMSemiBold: ["IBM-SemiBold", "sans-serif"],
-      // },
       fontFamily: {
         amiriBold: ["amiri-bold"],
         amiriRegular: ["amiri-regular"],
