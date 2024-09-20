@@ -21,34 +21,6 @@ import * as Updates from "expo-updates";
 import i18n from "@/i18n/i18n";
 import { useTranslation } from "react-i18next";
 
-// TODO: add types in a types file
-export interface Ayah {
-  number: number;
-  text: string;
-  numberInSurah: number;
-  juz: number;
-  manzil: number;
-  page: number;
-  ruku: number;
-  hizbQuarter: number;
-  sajda: boolean;
-}
-export interface Surah {
-  number: number;
-  name: string;
-  englishName: string;
-  englishNameTranslation: string;
-  revelationType: string;
-  ayahs: Ayah[];
-}
-export interface CompleteQuran {
-  data: {
-    data: {
-      surahs: Surah[];
-    };
-  };
-}
-
 const Azkar = () => {
   // const quran = axios.get("http://api.alquran.cloud/v1/quran/ar.asad", {
   //   method: "GET",
@@ -60,11 +32,7 @@ const Azkar = () => {
 
   const { t } = useTranslation("home");
 
-  const { data, isLoading } = useQuery(
-    "category",
-    async () => getCategories(),
-    { staleTime: 2629800000 }
-  );
+  const { data, isLoading } = useQuery("category", async () => getCategories());
 
   const [search, setSearch] = useState<string>("");
   const [openCont, setOpenCont] = useState(false);

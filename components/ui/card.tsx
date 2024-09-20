@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { TextClassContext } from "@/components/ui/text";
 import type { TextRef, ViewRef } from "@rn-primitives/types";
 import { cn } from "@/lib/utils";
+import i18n from "@/i18n/i18n";
 
 const Card = React.forwardRef<
   ViewRef,
@@ -41,6 +42,7 @@ const CardTitle = React.forwardRef<
     ref={ref}
     className={cn(
       "text-2xl text-card-foreground font-semibold leading-none tracking-tight",
+      i18n.language === "ar" ? "text-right" : "text-left",
       className
     )}
     {...props}

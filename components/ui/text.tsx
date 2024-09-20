@@ -3,6 +3,7 @@ import type { SlottableTextProps, TextRef } from "@rn-primitives/types";
 import * as React from "react";
 import { Text as RNText } from "react-native";
 import { cn } from "@/lib/utils";
+import i18n from "@/i18n/i18n";
 
 const TextClassContext = React.createContext<string | undefined>(undefined);
 
@@ -14,6 +15,7 @@ const Text = React.forwardRef<TextRef, SlottableTextProps>(
       <Component
         className={cn(
           "text-base text-foreground web:select-text",
+          i18n.language === "ar" ? "text-right" : "text-left",
           textClass,
           className
         )}

@@ -5,19 +5,20 @@ import { useRef, useState } from "react";
 import {
   FlatList,
   ScrollView,
-  Text,
   View,
   Animated,
   StyleSheet,
   Pressable,
 } from "react-native";
+import { Text } from "@/components/ui/text";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "react-query";
 import Swiper from "react-native-swiper";
 import PagerView from "react-native-pager-view";
-import SlideItem from "@/components/SlideItem";
+import SlideItem from "@/components/SlideItemAzkar";
 import Pagination from "@/components/Pagination";
-import { HeaderAzkar } from "@/components/HeaderAzkar";
+import { Header } from "@/components/Header";
+import SlideItemAzkar from "@/components/SlideItemAzkar";
 
 const AzkarCategory = () => {
   const local = useLocalSearchParams();
@@ -59,13 +60,13 @@ const AzkarCategory = () => {
 
   return (
     <SafeAreaView className="">
-      <HeaderAzkar title={local.category as string} />
+      <Header title={local.category as string} chevronTitle="اذكار" />
       <View className="h-full">
         <View>
           <FlatList
             data={data}
             renderItem={({ item }) => (
-              <SlideItem
+              <SlideItemAzkar
                 item={item}
                 itemLength={data?.length}
                 data={data}

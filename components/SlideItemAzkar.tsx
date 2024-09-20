@@ -1,7 +1,6 @@
 import {
   Image,
   StyleSheet,
-  Text,
   View,
   Dimensions,
   Animated,
@@ -10,6 +9,8 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
+import { Text } from "@/components/ui/text";
+
 import React, { useEffect } from "react";
 import { Azkar } from "@/types";
 // import { Progress } from "./ui/progress";
@@ -29,7 +30,7 @@ interface SlideItemProps {
   handleOnScroll: (event: any) => void;
 }
 
-const SlideItem = ({
+const SlideItemAzkar = ({
   item,
   itemLength,
   data,
@@ -206,7 +207,7 @@ const SlideItem = ({
   );
 };
 
-export default SlideItem;
+export default SlideItemAzkar;
 
 const styles = StyleSheet.create({
   container: {

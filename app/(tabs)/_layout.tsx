@@ -63,6 +63,28 @@ const Layout = () => {
           ),
         }}
       />
+      <Tabs.Screen
+        name="prayers"
+        options={{
+          title: "صلوات",
+          headerShown: false,
+
+          tabBarIcon: ({ focused }) => (
+            <TabIcon source={icons.home} focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="qibla"
+        options={{
+          title: "القبلة",
+          headerShown: false,
+
+          tabBarIcon: ({ focused }) => (
+            <TabIcon source={icons.home} focused={focused} />
+          ),
+        }}
+      />
     </Tabs>
   );
 };
