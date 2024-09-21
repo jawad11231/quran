@@ -8,13 +8,13 @@ const Qibla = () => {
 
   return (
     <SafeAreaView className="">
-      <Header
+      {/* <Header
         title="أتجاه القبلة"
         chevronTitle="الرئيسية"
         viewChevron={false}
         viewList={false}
-      />
-      <View className="mx-auto my-auto">
+      /> */}
+      <View className="mx-auto my-auto flex items-center justify-center">
         <QiblaCompass
           color={colorScheme === "dark" ? "#FAF0E6" : "#544981"}
           backgroundColor="transparent"

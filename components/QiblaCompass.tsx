@@ -227,7 +227,7 @@ const QiblaCompass = forwardRef<
         >
           <Motion.Image
             animate={{ rotate: compassRotate + "deg" }}
-            source={compassImage || require("@/assets/images/compass.png")}
+            source={compassImage || require("@/assets/icons/compass.png")}
             style={[styles.image]}
           />
           <Motion.View

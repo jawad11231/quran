@@ -58,6 +58,10 @@ export default function RootLayout() {
   // console.log(getLocales());
   // console.log(Appearance.getColorScheme());
 
+  I18nManager.forceRTL(true);
+  I18nManager.getConstants().isRTL = true;
+  I18nManager.doLeftAndRightSwapInRTL = false;
+
   const [fontsLoaded, fontError] = useFonts({
     "HelveticaNeueLTArabic-Bold": require("../assets/fonts/HelveticaNeueLTArabic-Bold.ttf"),
     "HelveticaNeueLTArabic-Roman": require("../assets/fonts/HelveticaNeueLTArabic-Roman.ttf"),
