@@ -5,11 +5,17 @@ import { fetchAPI } from "@/lib/fetch";
 import { getSuar } from "@/services/SurahsService";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useRef, useState } from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { useQuery } from "react-query";
 import axios, { AxiosRequestConfig } from "axios";
 import Swiper from "react-native-swiper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { getCategories } from "@/services/CategoryService";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,6 +26,8 @@ import { getLocales } from "expo-localization";
 import * as Updates from "expo-updates";
 import i18n from "@/i18n/i18n";
 import { useTranslation } from "react-i18next";
+import { ChevronLeft, Search, Sun, SunIcon } from "lucide-react-native";
+import { Input } from "@/components/ui/input";
 
 const Azkar = () => {
   // const quran = axios.get("http://api.alquran.cloud/v1/quran/ar.asad", {
@@ -47,9 +55,9 @@ const Azkar = () => {
   );
 
   return (
-    <SafeAreaView className="flex h-full w-full items-center ">
+    <SafeAreaView>
       <ScrollView>
-        <View>
+        {/* <View>
           <Text>{t("title")}</Text>
           <Text className="rtl:text-right ltr:text-left">
             Current locale: {i18n.language}
@@ -62,10 +70,120 @@ const Azkar = () => {
           >
             <Text>ar or en</Text>
           </TouchableOpacity>
+        </View> */}
+        <Text className="text-4xl font-semibold px-3 py-4">الأذكار</Text>
+        <View className="flex px-4 relative">
+          <Input
+            className="native:h-10 bg-muted px-8"
+            placeholder="بحث"
+            value={search}
+            onChangeText={(text) => {
+              setSearch(text);
+            }}
+          />
+          <Search
+            style={{
+              position: "absolute",
+              top: 10,
+              right: 18,
+            }}
+            height={17}
+            width={20}
+            color={"gray"}
+          />
+        </View>
+        {/* <View className="flex flex-row flex-wrap gap-2 w-full px-2 justify-center items-center">
+          <TouchableWithoutFeedback
+            onPress={() => {
+              router.push(`/azkar/أذكار الصباح`);
+            }}
+          >
+            <Card className="shadow-none border-none basis-1/2">
+              <CardHeader className="flex flex-row justify-between">
+                <View></View>
+                <SunIcon />
+              </CardHeader>
+              <CardContent>
+                <CardTitle className="text-right">أذكار الصباح</CardTitle>
+              </CardContent>
+            </Card>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              router.push(`/azkar/أذكار الصباح`);
+            }}
+          >
+            <Card className="shadow-none border-none basis-1/2">
+              <CardHeader className="flex flex-row justify-between">
+                <View></View>
+                <SunIcon />
+              </CardHeader>
+              <CardContent>
+                <CardTitle className="text-right">أذكار الصباح</CardTitle>
+              </CardContent>
+            </Card>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              router.push(`/azkar/أذكار الصباح`);
+            }}
+          >
+            <Card className="shadow-none border-none basis-1/2">
+              <CardHeader className="flex flex-row justify-between">
+                <View></View>
+                <SunIcon />
+              </CardHeader>
+              <CardContent>
+                <CardTitle className="text-right">أذكار الصباح</CardTitle>
+              </CardContent>
+            </Card>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              router.push(`/azkar/أذكار الصباح`);
+            }}
+          >
+            <Card className="shadow-none border-none basis-1/2">
+              <CardHeader className="flex flex-row justify-between">
+                <View></View>
+                <SunIcon />
+              </CardHeader>
+              <CardContent>
+                <CardTitle className="text-right">أذكار الصباح</CardTitle>
+              </CardContent>
+            </Card>
+          </TouchableWithoutFeedback>
+        </View> */}
+        <View className="p-4">
+          {data?.map(
+            (category, index) =>
+              category.cat_name.includes(search) && (
+                <Button
+                  key={index}
+                  variant="secondary"
+                  className={cn(
+                    "text-2xl w-full border-b border-r border-l border-border rounded-none",
+                    // first item rounded top
+                    index === 0 ? "rounded-t-lg border-t" : "",
+                    // last item rounded bottom
+                    index === data.length - 1 ? "rounded-b-lg border-b" : ""
+                  )}
+                  onPress={() => {
+                    router.push(`/azkar/${category.cat_name}`);
+                  }}
+                >
+                  <View className="w-full flex flex-row justify-between">
+                    <ChevronLeft />
+                    <Text className="text-right text-2xl">
+                      {category.cat_name}
+                    </Text>
+                  </View>
+                </Button>
+              )
+          )}
         </View>
         <View>
-          <View className="flex flex-row flex-wrap gap-4 w-full px-1 justify-center pb-20">
-            {/* max items in flex-row 2 */}
+          {/* <View className="flex flex-row flex-wrap gap-4 w-full px-1 justify-center pb-20">
             {data?.map((category, index) => (
               <Button
                 key={index}
@@ -78,7 +196,7 @@ const Azkar = () => {
                 <Text className="w-full text-center">{category.cat_name}</Text>
               </Button>
             ))}
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>

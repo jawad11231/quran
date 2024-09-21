@@ -5,7 +5,7 @@ import { Theme, ThemeProvider } from "@react-navigation/native";
 import { SplashScreen, Stack, Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { I18nManager, Platform, View } from "react-native";
+import { I18nManager, Platform, View, Appearance } from "react-native";
 import { NAV_THEME } from "@/lib/constants";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { PortalHost } from "@rn-primitives/portal";
@@ -13,12 +13,12 @@ import { setAndroidNavigationBar } from "@/lib/android-navigation-bar";
 import { useFonts } from "expo-font";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import RNAppRestart from "@brandingbrand/react-native-app-restart";
 import * as Updates from "expo-updates";
 import { getLocales } from "expo-localization";
 import i18n from "@/i18n/i18n";
+import * as SystemUI from "expo-system-ui";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +54,9 @@ export default function RootLayout() {
   //   currencySymbol,
   //   regionCode,
   // } = getLocales()[0];
+
+  // console.log(getLocales());
+  // console.log(Appearance.getColorScheme());
 
   const [fontsLoaded, fontError] = useFonts({
     "HelveticaNeueLTArabic-Bold": require("../assets/fonts/HelveticaNeueLTArabic-Bold.ttf"),

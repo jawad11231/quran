@@ -87,57 +87,75 @@ const SlideItemAzkar = ({
         width,
       }}
     >
-      <TouchableWithoutFeedback
-        onPress={() => {
-          if (completeCount < item.count) {
-            setCompleteCount(completeCount + 1);
-          }
-        }}
-      >
+      <ScrollView scrollEnabled={item.zekr.length > 500} className="">
         <View style={styles.container}>
-          <View>
-            <View
-              style={{
-                marginTop: 20,
-              }}
-            >
-              {opening && (
-                <Text className="text-right text-xl" key={opening}>
-                  {opening}
-                </Text>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              if (completeCount < item.count) {
+                setCompleteCount(completeCount + 1);
+              }
+            }}
+          >
+            <View>
+              <View
+                style={{
+                  marginTop: 20,
+                }}
+              >
+                {opening && (
+                  <Text className="text-right text-xl" key={opening}>
+                    {opening}
+                  </Text>
+                )}
+              </View>
+              <Text
+                // style={styles.title}
+                className={cn(
+                  "text-xl text-right ",
+                  item.zekr.match(/\d+/g)
+                    ? "font-amiriRegular leading-loose"
+                    : "font-normal"
+                )}
+              >
+                {item.zekr}
+              </Text>
+              <Text className="text-right text-lg mt-12">
+                {item.description}
+              </Text>
+              {item.reference !== "" && (
+                <Text style={styles.reference}>({item.reference})</Text>
+              )}
+              {item.count !== 0 && (
+                <View className="border-t border-border flex justify-center items-center p-2 mt-4">
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "light",
+                      color: "grey",
+                    }}
+                  >
+                    {completeCount}/{item.count}
+                  </Text>
+                </View>
               )}
             </View>
-            <Text
-              // style={styles.title}
-              className={cn(
-                "text-xl text-right ",
-                item.zekr.match(/\d+/g)
-                  ? "font-amiriRegular leading-loose"
-                  : "font-normal"
-              )}
-            >
-              {item.zekr}
-            </Text>
-            <Text className="text-right text-lg mt-12">{item.description}</Text>
-            {item.reference !== "" && (
-              <Text style={styles.reference}>({item.reference})</Text>
-            )}
-            {item.count !== 0 && (
-              <View className="border-t border-border flex justify-center items-center p-2 mt-4">
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontWeight: "light",
-                    color: "grey",
-                  }}
-                >
-                  {completeCount}/{item.count}
-                </Text>
-              </View>
-            )}
-          </View>
+          </TouchableWithoutFeedback>
+          {item.count !== 0 && (
+            <View className="h-screen">
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  if (completeCount < item.count) {
+                    setCompleteCount(completeCount + 1);
+                  }
+                }}
+              >
+                <View className="h-screen"></View>
+              </TouchableWithoutFeedback>
+            </View>
+          )}
         </View>
-      </TouchableWithoutFeedback>
+      </ScrollView>
+
       <View
         style={{
           height: 170,

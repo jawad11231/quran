@@ -52,7 +52,7 @@ export const Header = ({
           onPress={() => {
             router.back();
           }}
-          className="pr-2 flex flex-col gap-1 items-center"
+          className="pr-2 flex flex-row gap-1 items-center"
         >
           <Text>{chevronTitle}</Text>
           <ChevronRight

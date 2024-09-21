@@ -9,9 +9,9 @@ import {
   Animated,
   StyleSheet,
   Pressable,
+  SafeAreaView,
 } from "react-native";
 import { Text } from "@/components/ui/text";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "react-query";
 import Swiper from "react-native-swiper";
 import PagerView from "react-native-pager-view";
