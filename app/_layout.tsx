@@ -19,6 +19,8 @@ import * as Updates from "expo-updates";
 import { getLocales } from "expo-localization";
 import i18n from "@/i18n/i18n";
 import * as SystemUI from "expo-system-ui";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 const queryClient = new QueryClient();
 

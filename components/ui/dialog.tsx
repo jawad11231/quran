@@ -4,6 +4,7 @@ import { Platform, StyleSheet, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { X } from "@/lib/icons/X";
 import { cn } from "@/lib/utils";
+import i18n from "@/i18n/i18n";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -113,7 +114,11 @@ const DialogHeader = ({
   ...props
 }: React.ComponentPropsWithoutRef<typeof View>) => (
   <View
-    className={cn("flex flex-col gap-1.5 text-center sm:text-left", className)}
+    className={cn(
+      "flex flex-col gap-1.5 text-center sm:text-left",
+      // i18n.language === "ar" ? "text-right" : "text-left",
+      className
+    )}
     {...props}
   />
 );

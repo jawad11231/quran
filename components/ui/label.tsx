@@ -1,6 +1,7 @@
 import * as LabelPrimitive from "@rn-primitives/label";
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import i18n from "@/i18n/i18n";
 
 const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Text>,
@@ -21,6 +22,7 @@ const Label = React.forwardRef<
         ref={ref}
         className={cn(
           "text-sm text-foreground native:text-base font-medium leading-none web:peer-disabled:cursor-not-allowed web:peer-disabled:opacity-70",
+          i18n.language === "ar" ? "text-right" : "text-left",
           className
         )}
         {...props}
