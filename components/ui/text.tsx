@@ -14,7 +14,7 @@ const Text = React.forwardRef<TextRef, SlottableTextProps>(
     return (
       <Component
         className={cn(
-          "text-base text-foreground web:select-text",
+          "text-base text-foreground web:select-text font-cairoRegular",
           i18n.language === "ar" ? "text-right" : "text-left",
           textClass,
           className

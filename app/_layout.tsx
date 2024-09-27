@@ -74,6 +74,13 @@ export default function RootLayout() {
     "amiri-boldslanted": require("../assets/fonts/amiri-boldslanted.ttf"),
     "amiri-quran": require("../assets/fonts/amiri-quran.ttf"),
     "amiri-quran-colored": require("../assets/fonts/amiri-quran-colored.ttf"),
+    "cairo-Regular": require("../assets/fonts/Cairo-Regular.ttf"),
+    "cairo-Bold": require("../assets/fonts/Cairo-Bold.ttf"),
+    "cairo-Black": require("../assets/fonts/Cairo-Black.ttf"),
+    "cairo-ExtraLight": require("../assets/fonts/Cairo-ExtraLight.ttf"),
+    "cairo-Light": require("../assets/fonts/Cairo-Light.ttf"),
+    "cairo-Medium": require("../assets/fonts/Cairo-Medium.ttf"),
+    "cairo-SemiBold": require("../assets/fonts/Cairo-SemiBold.ttf"),
   });
 
   React.useEffect(() => {
@@ -120,6 +127,7 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="azkarPage" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>

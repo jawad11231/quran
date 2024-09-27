@@ -20,6 +20,13 @@ module.exports = {
         amiriBoldslanted: ["amiri-boldslanted"],
         amiriQuran: ["amiri-quran"],
         amiriQuranColored: ["amiri-quran-colored"],
+        cairoRegular: ["cairo-Regular"],
+        cairoBold: ["cairo-Bold"],
+        cairoBlack: ["cairo-Black"],
+        cairoExtraLight: ["cairo-ExtraLight"],
+        cairoLight: ["cairo-Light"],
+        cairoMedium: ["cairo-Medium"],
+        cairoSemiBold: ["cairo-SemiBold"],
       },
       colors: {
         border: "hsl(var(--border))",
