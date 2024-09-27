@@ -186,7 +186,7 @@ const Page = () => {
                     <View className="flex flex-row gap-1">
                       <View>
                         {timings && (
-                          <Text className="text-orange-400 font-cairoBold">
+                          <Text className="text-primary font-cairoBold">
                             {calcHowManyTimeToNextPrayer()}
                           </Text>
                         )}
