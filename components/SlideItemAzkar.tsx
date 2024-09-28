@@ -8,17 +8,20 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  ImageBackground,
 } from "react-native";
 import { Text } from "@/components/ui/text";
 
 import React, { useEffect } from "react";
 import { Azkar } from "@/types";
 // import { Progress } from "./ui/progress";
-import * as Progress from "react-native-progress";
+import * as ProgressReact from "react-native-progress";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, RotateCcw } from "lucide-react-native";
 import { Button } from "./ui/button";
 import Swiper from "react-native-swiper";
+import { images } from "@/constants/indxe";
+import { Progress } from "./ui/progress";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -26,20 +29,11 @@ interface SlideItemProps {
   item: Azkar;
   itemLength?: number;
   data?: Azkar[];
-  scrollX: Animated.Value;
-  handleOnScroll: (event: any) => void;
 }
 
-const SlideItemAzkar = ({
-  item,
-  itemLength,
-  data,
-  handleOnScroll,
-  scrollX,
-}: SlideItemProps) => {
+const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
   const translateYImage = new Animated.Value(40);
   const [completeCount, setCompleteCount] = React.useState(0);
-  const [opening, setOpening] = React.useState<string | null>(null);
 
   Animated.timing(translateYImage, {
     toValue: 0,
@@ -48,34 +42,13 @@ const SlideItemAzkar = ({
     easing: Easing.bounce,
   }).start();
 
-  // if (item.zekr.includes("أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ")) {
-  //   setOpening("أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ");
-  //   item.zekr = item.zekr.replace(
-  //     "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ",
-  //     ""
-  //   );
-  // }
-  // if (item.zekr.includes("بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم")) {
-  //   setOpening("بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ");
-  //   item.zekr = item.zekr.replace("بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم", "");
-  // }
-
-  useEffect(() => {
-    if (item.zekr.includes("أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ")) {
-      setOpening("أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ");
-      item.zekr = item.zekr.replace(
-        "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ",
-        ""
-      );
+  const calcProgress = () => {
+    if (itemLength && data && data.indexOf(item) === itemLength - 1) {
+      return 100;
+    } else {
+      return data && itemLength && (data.indexOf(item) / itemLength) * 100;
     }
-  }, [item.zekr.includes("أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ")]);
-
-  useEffect(() => {
-    if (item.zekr.includes("بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم")) {
-      setOpening("بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ");
-      item.zekr = item.zekr.replace("بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم", "");
-    }
-  }, [item.zekr.includes("بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم")]);
+  };
 
   return (
     <View
@@ -89,6 +62,9 @@ const SlideItemAzkar = ({
     >
       <ScrollView scrollEnabled={item.zekr.length > 500} className="">
         <View style={styles.container}>
+          <View className="py-4">
+            <Progress value={calcProgress()} />
+          </View>
           <TouchableWithoutFeedback
             onPress={() => {
               if (completeCount < item.count) {
@@ -97,29 +73,43 @@ const SlideItemAzkar = ({
             }}
           >
             <View>
-              <View
-                style={{
-                  marginTop: 20,
-                }}
-              >
-                {opening && (
-                  <Text className="text-right text-xl" key={opening}>
-                    {opening}
+              <View className="rounded-3xl">
+                <ImageBackground
+                  resizeMode="cover"
+                  source={images.islamicPattern}
+                  style={{
+                    padding: 10,
+                    borderRadius: 16,
+                    overflow: "hidden",
+                  }}
+                >
+                  <Text
+                    // style={styles.title}
+                    className={cn(
+                      "text-xl text-white text-center",
+                      // item.zekr.includes(
+                      //   "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ"
+                      // )
+                      //   ? "text-center"
+                      //   : "text-right",
+                      // item.zekr.includes(
+                      //   "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ"
+                      // )
+                      //   ? "text-center"
+                      //   : "text-right",
+                      // item.zekr.includes("بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم")
+                      //   ? "text-center"
+                      //   : "text-right",
+                      item.zekr.match(/\d+/g)
+                        ? "font-amiriRegular leading-loose"
+                        : "font-normal"
+                    )}
+                  >
+                    {item.zekr}
                   </Text>
-                )}
+                </ImageBackground>
               </View>
-              <Text
-                // style={styles.title}
-                className={cn(
-                  "text-xl text-right ",
-                  item.zekr.match(/\d+/g)
-                    ? "font-amiriRegular leading-loose"
-                    : "font-normal"
-                )}
-              >
-                {item.zekr}
-              </Text>
-              <Text className="text-right text-lg mt-12">
+              <Text className="text-right text-lg mt-8">
                 {item.description}
               </Text>
               {item.reference !== "" && (
@@ -155,24 +145,27 @@ const SlideItemAzkar = ({
           )}
         </View>
       </ScrollView>
-
       <View
         style={{
           height: 170,
           width: "100%",
           borderTopColor: "#E5E7EB",
           borderTopWidth: 1,
-          // backgroundColor: "#F3F4F6",
         }}
       >
-        <View className="flex flex-row justify-between items-center p-4">
+        <View
+          className={cn(
+            "flex flex-row  items-center pt-4 ",
+            item.count !== 0 ? "justify-evenly" : "justify-center"
+          )}
+        >
           <Text>
             {itemLength && data && `${data.indexOf(item) + 1}/${itemLength}`}
           </Text>
-          <Text>ff</Text>
           <View>
             {item.count !== 0 && (
               <View
+                className="pr-2"
                 style={{
                   flex: 1,
                   alignItems: "center",
@@ -187,7 +180,7 @@ const SlideItemAzkar = ({
                   }}
                 >
                   <View className="bg-white rounded-full">
-                    <Progress.Circle
+                    <ProgressReact.Circle
                       progress={completeCount / item.count}
                       size={80}
                       indeterminate={false}
@@ -203,22 +196,15 @@ const SlideItemAzkar = ({
               </View>
             )}
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              if (data) {
-                scrollX.setValue(width * (data.length - 1));
-              }
-            }}
-          >
-            <ChevronLeft size={20} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setCompleteCount(0);
-            }}
-          >
-            <RotateCcw size={20} color="black" />
-          </TouchableOpacity>
+          {item.count !== 0 && (
+            <TouchableOpacity
+              onPress={() => {
+                setCompleteCount(0);
+              }}
+            >
+              <RotateCcw size={20} color="black" />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>

@@ -45,7 +45,7 @@ export const Header = ({
         )}
       </View>
       <View className="flex justify-center items-center text-center">
-        <Text className="font-semibold text-lg text-center pl-9">{title}</Text>
+        <Text className="font-semibold text-lg text-center pl-16">{title}</Text>
       </View>
       {viewChevron && (
         <Pressable

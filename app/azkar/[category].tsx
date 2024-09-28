@@ -1,6 +1,6 @@
 import { getAzkarByCate } from "@/services/AzkarService";
 import { Azkar } from "@/types";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
 import {
   FlatList,
@@ -19,6 +19,7 @@ import SlideItem from "@/components/SlideItemAzkar";
 import Pagination from "@/components/Pagination";
 import { Header } from "@/components/Header";
 import SlideItemAzkar from "@/components/SlideItemAzkar";
+import { ArrowRight } from "lucide-react-native";
 
 const AzkarCategory = () => {
   const local = useLocalSearchParams();
@@ -60,7 +61,22 @@ const AzkarCategory = () => {
 
   return (
     <SafeAreaView className="">
-      <Header title={local.category as string} chevronTitle="اذكار" />
+      {/* <Header
+        title={local.category as string}
+        chevronTitle="اذكار"
+        viewList={false}
+      /> */}
+      <View
+        className="flex flex-row gap-2 items-center justify-end  px-3 py-4"
+        onTouchStart={() => {
+          router.back();
+        }}
+      >
+        <Text className="text-lg font-cairoBold">الأذكار</Text>
+        <View className="bg-black rounded-full h-5 w-5 flex items-center justify-center">
+          <ArrowRight size={14} color="white" />
+        </View>
+      </View>
       <View className="h-full">
         <View>
           <FlatList
@@ -70,8 +86,6 @@ const AzkarCategory = () => {
                 item={item}
                 itemLength={data?.length}
                 data={data}
-                handleOnScroll={handleOnScroll}
-                scrollX={scrollX}
               />
             )}
             horizontal

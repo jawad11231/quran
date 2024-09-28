@@ -192,9 +192,11 @@ const Page = () => {
                         )}
                       </View>
                       <View>
-                        <Text className="text-white font-cairoBold">
-                          متبقى على الأذان
-                        </Text>
+                        {timings && (
+                          <Text className="text-white font-cairoBold">
+                            متبقى على الأذان
+                          </Text>
+                        )}
                       </View>
                     </View>
                   </View>
@@ -204,7 +206,7 @@ const Page = () => {
           </View>
         </View>
         <View className="p-2 px-4 flex flex-col gap-4">
-          <View className=" rounded-3xl">
+          <View className="rounded-3xl">
             <ImageBackground
               resizeMode="cover"
               source={images.islamicPattern}
