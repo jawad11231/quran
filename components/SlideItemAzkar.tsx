@@ -185,9 +185,12 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
                       size={80}
                       indeterminate={false}
                       showsText={true}
-                      textStyle={{ fontSize: 40, fontWeight: "semibold" }}
+                      textStyle={{
+                        fontSize: 40,
+                        fontWeight: "semibold",
+                      }}
                       formatText={() => completeCount}
-                      // fill="white"
+                      color="#eaa92d"
                       className="bg-white"
                       borderWidth={1}
                     />

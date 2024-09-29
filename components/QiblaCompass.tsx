@@ -11,6 +11,7 @@ import * as Location from "expo-location";
 import { moderateScale } from "react-native-size-matters";
 import { Subscription } from "expo-sensors/build/Pedometer";
 import { Motion } from "@legendapp/motion";
+import { images } from "@/constants/indxe";
 
 export const useQiblaCompass = () => {
   const [subscription, setSubscription] = useState<Subscription | null>();
@@ -227,7 +228,7 @@ const QiblaCompass = forwardRef<
         >
           <Motion.Image
             animate={{ rotate: compassRotate + "deg" }}
-            source={compassImage || require("@/assets/icons/compass.png")}
+            source={images.compass}
             style={[styles.image]}
           />
           <Motion.View
@@ -246,10 +247,11 @@ const QiblaCompass = forwardRef<
               source={require("@/assets/images/kaba.png")}
               style={{
                 resizeMode: "center",
-                height: 100,
-                paddingBottom: 150,
-                marginTop: 20,
-                width: 60,
+                height: 200,
+                paddingBottom: 230,
+                marginTop: 25,
+                marginRight: 13,
+                width: 200,
                 zIndex: 999,
               }}
             />

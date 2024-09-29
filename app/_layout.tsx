@@ -128,6 +128,8 @@ export default function RootLayout() {
         >
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="azkarPage" options={{ headerShown: false }} />
+          <Stack.Screen name="prayersPage" options={{ headerShown: false }} />
+          <Stack.Screen name="qiblaPage" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>

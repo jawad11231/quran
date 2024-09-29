@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground,
   ScrollView,
+  Settings,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -15,7 +16,7 @@ import * as Location from "expo-location";
 import { getLocales } from "expo-localization";
 import { getUserLocation } from "@/utils";
 import { useEffect, useState } from "react";
-import { MapPin } from "lucide-react-native";
+import { MapPin, Settings2, SettingsIcon } from "lucide-react-native";
 
 type Timings = {
   Fajr: string;
@@ -114,7 +115,6 @@ const Page = () => {
     });
 
   const calcHowManyTimeToNextPrayer = () => {
-    // i went value like this ٣س و ١٥د
     if (nextPrayer) {
       const time = timings[nextPrayer].split(" ")[0];
       const [hours, minutes] = time.split(":");
@@ -133,7 +133,7 @@ const Page = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDisplayCurrentAddress(displayCurrentAddress);
+      calcHowManyTimeToNextPrayer();
     }, 60000);
     return () => clearInterval(interval);
   }, [calcHowManyTimeToNextPrayer()]);
@@ -148,13 +148,31 @@ const Page = () => {
               className="z-0 w-full h-[319px]"
             >
               <View className="flex flex-col gap-11 pt-16 px-4">
-                <View className="flex flex-col gap-1 items-end">
-                  <Text className="text-xs text-white font-cairoBold">
-                    <MapPin size={14} color="white" /> الموقع
-                  </Text>
-                  <Text className="text-sm text-white font-cairoBold">
-                    {displayCurrentAddress}
-                  </Text>
+                <View className="flex flex-row justify-between w-full">
+                  <View className="flex flex-row gap-2">
+                    <View className="p-2 h-3/4 bg-white/10 rounded-full">
+                      <SettingsIcon size={16} color="white" />
+                    </View>
+                    <View className="p-2 h-3/4 flex flex-row gap-1 bg-white/10 rounded-full justify-center items-center">
+                      <Text className="font-cairoBold text-white">سبحة</Text>
+                      <Image
+                        source={images.sabha}
+                        style={{
+                          width: 20,
+                          height: 20,
+                          borderRadius: 50,
+                        }}
+                      />
+                    </View>
+                  </View>
+                  <View className="flex flex-col gap-1 items-end">
+                    <Text className="text-xs text-white font-cairoBold">
+                      <MapPin size={14} color="white" /> الموقع
+                    </Text>
+                    <Text className="text-sm text-white font-cairoBold">
+                      {displayCurrentAddress}
+                    </Text>
+                  </View>
                 </View>
                 <View className="items-center mb-4">
                   {timings && (
@@ -229,20 +247,6 @@ const Page = () => {
               اكتشف المزايا والخصائص الكاملة لتطبيقنا
             </Text>
           </View>
-          {/* <View className="flex flex-row flex-wrap gap-2 w-full justify-center items-center">
-            <View className="w-5/12  bg-white">
-              <Text>f</Text>
-            </View>
-            <View className="w-5/12 ">
-              <Text>f</Text>
-            </View>
-            <View className="w-5/12 ">
-              <Text>f</Text>
-            </View>
-            <View className="w-5/12 ">
-              <Text>f</Text>
-            </View>
-          </View> */}
           <View style={[styles.frameParent, styles.frameFlexBox]}>
             <TouchableOpacity
               style={[styles.frameGroup, styles.frameFlexBox]}
@@ -271,7 +275,10 @@ const Page = () => {
                 source={images.quran}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.frameGroup, styles.frameFlexBox]}>
+            <TouchableOpacity
+              style={[styles.frameGroup, styles.frameFlexBox]}
+              onPress={() => router.push("/prayersPage")}
+            >
               <View style={styles.parentFlexBox}>
                 <Text style={[styles.text2, styles.textTypo]}>
                   اوقات الصلاة
@@ -284,7 +291,10 @@ const Page = () => {
                 source={images.shalat}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.frameGroup, styles.frameFlexBox]}>
+            <TouchableOpacity
+              style={[styles.frameGroup, styles.frameFlexBox]}
+              onPress={() => router.push("/qiblaPage")}
+            >
               <View style={[styles.parent, styles.parentFlexBox]}>
                 <Text style={[styles.text, styles.textTypo]}>القبلة</Text>
                 <Text style={styles.text1}>اتجاه الصلاة</Text>
