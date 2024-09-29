@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
-import { RotateCcw } from "lucide-react-native";
+import { ArrowRight, RotateCcw } from "lucide-react-native";
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
   SafeAreaView,
@@ -31,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { router } from "expo-router";
 
 const Sabha = () => {
   const [count, setCount] = useState(0);
@@ -45,6 +46,20 @@ const Sabha = () => {
 
   return (
     <SafeAreaView className="relative">
+      <View className="flex flex-row justify-between w-full">
+        <View></View>
+        <View
+          className="flex flex-row gap-2 items-center px-3 py-4"
+          onTouchStart={() => {
+            router.back();
+          }}
+        >
+          <Text className="text-lg font-cairoBold">سبحة</Text>
+          <View className="bg-black rounded-full h-5 w-5 flex items-center justify-center">
+            <ArrowRight size={14} color="white" />
+          </View>
+        </View>
+      </View>
       <TouchableWithoutFeedback onPress={() => setCount(count + 1)}>
         <View className="h-full flex justify-between pb-4">
           <View>
@@ -75,7 +90,6 @@ const Sabha = () => {
                 </DialogContent>
               </Dialog>
             </View>
-            <Text className="text-4xl font-semibold px-3 py-4">سبحة</Text>
           </View>
           <View className="flex items-center">
             <View
@@ -88,7 +102,7 @@ const Sabha = () => {
             >
               <Text
                 className={cn(
-                  "text-9xl",
+                  "text-9xl leading-tight font-cairoBold flex p-0 pt-10",
                   (target && count === target) || (target && target < count)
                     ? "text-white"
                     : "text-black"

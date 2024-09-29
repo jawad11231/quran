@@ -153,7 +153,12 @@ const Page = () => {
                     <View className="p-2 h-3/4 bg-white/10 rounded-full">
                       <SettingsIcon size={16} color="white" />
                     </View>
-                    <View className="p-2 h-3/4 flex flex-row gap-1 bg-white/10 rounded-full justify-center items-center">
+                    <View
+                      className="p-2 h-3/4 flex flex-row gap-1 bg-white/10 rounded-full justify-center items-center"
+                      onTouchStart={() => {
+                        router.push("/sabhaPage");
+                      }}
+                    >
                       <Text className="font-cairoBold text-white">سبحة</Text>
                       <Image
                         source={images.sabha}

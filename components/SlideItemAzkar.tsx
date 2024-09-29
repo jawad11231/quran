@@ -62,9 +62,9 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
     >
       <ScrollView scrollEnabled={item.zekr.length > 500} className="">
         <View style={styles.container}>
-          <View className="py-4">
+          {/* <View className="py-4">
             <Progress value={calcProgress()} />
-          </View>
+          </View> */}
           <TouchableWithoutFeedback
             onPress={() => {
               if (completeCount < item.count) {
@@ -109,7 +109,7 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
                   </Text>
                 </ImageBackground>
               </View>
-              <Text className="text-right text-lg mt-8">
+              <Text className="text-right text-lg mt-9">
                 {item.description}
               </Text>
               {item.reference !== "" && (
@@ -155,17 +155,18 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
       >
         <View
           className={cn(
-            "flex flex-row  items-center pt-4 ",
-            item.count !== 0 ? "justify-evenly" : "justify-center"
+            "flex flex-row  items-center p-4 ",
+            item.count !== 0 ? "justify-between" : "justify-center"
           )}
         >
           <Text>
             {itemLength && data && `${data.indexOf(item) + 1}/${itemLength}`}
           </Text>
+          <View></View>
           <View>
             {item.count !== 0 && (
               <View
-                className="pr-2"
+                className="pr-6"
                 style={{
                   flex: 1,
                   alignItems: "center",
@@ -199,6 +200,7 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
               </View>
             )}
           </View>
+          <View></View>
           {item.count !== 0 && (
             <TouchableOpacity
               onPress={() => {

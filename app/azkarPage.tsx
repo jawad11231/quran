@@ -163,7 +163,7 @@ const azkarPage = () => {
                 source={images.sleep}
               />
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={[styles.frameGroup, styles.frameFlexBox]}
               onPress={() => {
                 router.push(`/azkar/دعاء الخروج من المسجد`);
@@ -179,8 +179,8 @@ const azkarPage = () => {
                 resizeMode="cover"
                 source={images.shalat}
               />
-            </TouchableOpacity>
-            <TouchableOpacity
+            </TouchableOpacity> */}
+            {/* <TouchableOpacity
               style={[styles.frameGroup, styles.frameFlexBox]}
               onPress={() => {
                 router.push(`/azkar/أذكار الآذان`);
@@ -196,7 +196,7 @@ const azkarPage = () => {
                 resizeMode="cover"
                 source={images.nabawiMosque}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <View>
             <View className="flex px-2 relative">
