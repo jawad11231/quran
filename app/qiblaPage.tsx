@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import QiblaCompass from "@/components/QiblaCompass";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { router } from "expo-router";

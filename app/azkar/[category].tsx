@@ -17,7 +17,6 @@ import Swiper from "react-native-swiper";
 import PagerView from "react-native-pager-view";
 import SlideItem from "@/components/SlideItemAzkar";
 import Pagination from "@/components/Pagination";
-import { Header } from "@/components/Header";
 import SlideItemAzkar from "@/components/SlideItemAzkar";
 import { ArrowRight } from "lucide-react-native";
 

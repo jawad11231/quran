@@ -4,7 +4,7 @@ import { FavType } from "@/types";
 
 const Fav = {
   getFav: (): FavType[] => {
-    const favJson = storage.getString("fav");
+    const favJson = storage.getString("fav") as any;
     const favArray = favJson ? JSON.parse(favJson) : [];
     return favArray;
   },

@@ -1,7 +1,3 @@
-import home from "@/assets/icons/home.png";
-import azkar from "@/assets/icons/arabic.png";
-import kaaba from "@/assets/icons/kaaba.png";
-import salat from "@/assets/icons/salat.png";
 import homeBachground from "@/assets/images/homeBackground.png";
 import islamicPattern from "@/assets/images/islamicPattern.png";
 import shalat from "@/assets/images/shalat.png";
@@ -14,13 +10,6 @@ import sleep from "@/assets/images/sleep.png";
 import sleepDisorder from "@/assets/images/sleep-disorder.png";
 import sabha from "@/assets/images/sabha.png";
 import compass from "@/assets/images/compass.png";
-
-export const icons = {
-  home,
-  azkar,
-  kaaba,
-  salat,
-};
 
 export const images = {
   homeBachground,

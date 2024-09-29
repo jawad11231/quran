@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { fetchAPI } from "@/lib/fetch";
 import { getSuar } from "@/services/SurahsService";
 import { router, useFocusEffect } from "expo-router";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   FlatList,
   Image,
@@ -53,6 +53,7 @@ const azkarPage = () => {
   const { data, isLoading } = useQuery("category", async () => getCategories());
 
   const [search, setSearch] = useState<string>("");
+  const [categoryData, setCategoryData] = useState(data);
   const [openCont, setOpenCont] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const swiperRef = useRef<Swiper>(null);
@@ -63,6 +64,18 @@ const azkarPage = () => {
       setOpenCont(true);
     }, [])
   );
+
+  useEffect(() => {
+    if (data && search !== "" && categoryData) {
+      const filteredData = categoryData.filter((category) =>
+        category.cat_name.includes(search)
+      );
+      setCategoryData(filteredData);
+    } else {
+      setCategoryData(data);
+    }
+  }, [search, data]);
+
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
       <ScrollView className="flex-1 bg-gray-100">
@@ -220,31 +233,34 @@ const azkarPage = () => {
               />
             </View>
             <View className="p-4 px-2">
-              {data?.map(
-                (category, index) =>
-                  category.cat_name.includes(search) && (
-                    <Button
-                      key={index}
-                      variant="outline"
-                      className={cn(
-                        "text-2xl w-full bg-white border-b-0 rounded-none shadow-none",
-                        // first item rounded top
-                        index === 0 ? "rounded-t-lg border-t" : "",
-                        // last item rounded bottom
-                        index === data.length - 1 ? "rounded-b-lg border-b" : ""
-                      )}
-                      onPress={() => {
-                        router.push(`/azkar/${category.cat_name}`);
-                      }}
-                    >
-                      <View className="w-full flex flex-row justify-between">
-                        <ChevronLeft />
-                        <Text className="text-right text-2xl">
-                          {category.cat_name}
-                        </Text>
-                      </View>
-                    </Button>
-                  )
+              {categoryData?.map(
+                (category, index) => (
+                  // category.cat_name.includes(search) && (
+                  <Button
+                    key={index}
+                    variant="outline"
+                    className={cn(
+                      "text-2xl w-full bg-white border-b-0 rounded-none shadow-none",
+                      // first item rounded top
+                      index === 0 ? "rounded-t-lg border-t" : "",
+                      // last item rounded bottom
+                      index === categoryData.length - 1
+                        ? "rounded-b-lg border-b"
+                        : ""
+                    )}
+                    onPress={() => {
+                      router.push(`/azkar/${category.cat_name}`);
+                    }}
+                  >
+                    <View className="w-full flex flex-row justify-between">
+                      <ChevronLeft />
+                      <Text className="text-right text-2xl">
+                        {category.cat_name}
+                      </Text>
+                    </View>
+                  </Button>
+                )
+                // )
               )}
             </View>
           </View>

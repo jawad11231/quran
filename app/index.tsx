@@ -101,6 +101,17 @@ const Page = () => {
   };
 
   const nextPrayer =
+    // timings &&
+    // (Object.keys(timings) as (keyof Timings)[]).find((key) => {
+    //   const time = timings[key].split(" ")[0];
+    //   const [hours, minutes] = time.split(":");
+    //   const [currentHours, currentMinutes] = [
+    //     new Date().getHours(),
+    //     new Date().getMinutes(),
+    //   ];
+    //   const currentTime = currentHours * 60 + currentMinutes;
+    //   const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
+    //   return prayerTime > currentTime
     timings &&
     (Object.keys(timings) as (keyof Timings)[]).find((key) => {
       const time = timings[key].split(" ")[0];
@@ -111,11 +122,16 @@ const Page = () => {
       ];
       const currentTime = currentHours * 60 + currentMinutes;
       const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
+      // if the next prayer is after midnight
+      if (prayerTime < currentTime) {
+        // return jajr
+        return key === "Fajr";
+      }
       return prayerTime > currentTime;
     });
 
   const calcHowManyTimeToNextPrayer = () => {
-    if (nextPrayer) {
+    if (nextPrayer && timings) {
       const time = timings[nextPrayer].split(" ")[0];
       const [hours, minutes] = time.split(":");
       const [currentHours, currentMinutes] = [
@@ -127,6 +143,9 @@ const Page = () => {
       const diff = prayerTime - currentTime;
       const hoursDiff = Math.floor(diff / 60);
       const minutesDiff = diff % 60;
+      if (hoursDiff < 0 || minutesDiff < 0) {
+        return `${24 + hoursDiff}س و ${60 + minutesDiff}د`;
+      }
       return `${hoursDiff}س و ${minutesDiff}د`;
     }
   };
@@ -138,6 +157,8 @@ const Page = () => {
     return () => clearInterval(interval);
   }, [calcHowManyTimeToNextPrayer()]);
 
+  // console.log("timings", timings);
+  // console.log("nextPrayer", nextPrayer);
   return (
     <ScrollView className="flex-1 bg-gray-100">
       <View className="flex flex-col gap-4">
@@ -184,10 +205,14 @@ const Page = () => {
                     <View className="">
                       <View className="flex flex-col items-center justify-center pt-4">
                         <Text className="text-4xl text-white font-cairoBold pt-4">
-                          {timings && timings[nextPrayer!].split(" ")[0]}
+                          {timings &&
+                            nextPrayer &&
+                            timings[nextPrayer!].split(" ")[0]}
                         </Text>
                         <Text className="text-lg text-white font-cairoBold">
-                          {timings && nextPrayer !== "Sunrise" && `موعد أذان`}{" "}
+                          {timings && nextPrayer
+                            ? nextPrayer !== "Sunrise" && `موعد أذان`
+                            : ""}{" "}
                           {timings && nextPrayer === "Asr"
                             ? "العصر"
                             : nextPrayer === "Dhuhr"
@@ -198,27 +223,29 @@ const Page = () => {
                             ? "العشاء"
                             : nextPrayer === "Maghrib"
                             ? "المغرب"
-                            : "الشروق"}
+                            : ""}
                         </Text>
                       </View>
                     </View>
                   )}
                 </View>
-                {nextPrayer !== "Sunrise" && (
+                {timings && nextPrayer !== "Sunrise" && (
                   <View className="items-end">
                     <View className="flex flex-row gap-1">
                       <View>
-                        {timings && (
+                        {timings && nextPrayer && (
                           <Text className="text-primary font-cairoBold">
                             {calcHowManyTimeToNextPrayer()}
                           </Text>
                         )}
                       </View>
                       <View>
-                        {timings && (
+                        {timings && nextPrayer ? (
                           <Text className="text-white font-cairoBold">
                             متبقى على الأذان
                           </Text>
+                        ) : (
+                          <View></View>
                         )}
                       </View>
                     </View>
@@ -267,7 +294,10 @@ const Page = () => {
                 source={images.praying}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.frameGroup, styles.frameFlexBox]}>
+            <TouchableOpacity
+              style={[styles.frameGroup, styles.frameFlexBox]}
+              onPress={() => router.push("/quranPage")}
+            >
               <View style={[styles.parent, styles.parentFlexBox]}>
                 <Text style={[styles.text2, styles.textTypo]}>
                   القرآن الكريم

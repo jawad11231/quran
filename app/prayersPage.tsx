@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import { Prayer } from "@/components/Prayer";
 import { Text } from "@/components/ui/text";
 import { images } from "@/constants/indxe";
@@ -25,6 +24,17 @@ const PrayersPage = () => {
   };
 
   const nextPrayer =
+    // timings &&
+    // (Object.keys(timings) as (keyof Timings)[]).find((key) => {
+    //   const time = timings[key].split(" ")[0];
+    //   const [hours, minutes] = time.split(":");
+    //   const [currentHours, currentMinutes] = [
+    //     new Date().getHours(),
+    //     new Date().getMinutes(),
+    //   ];
+    //   const currentTime = currentHours * 60 + currentMinutes;
+    //   const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
+    //   return prayerTime > currentTime;
     timings &&
     (Object.keys(timings) as (keyof Timings)[]).find((key) => {
       const time = timings[key].split(" ")[0];
@@ -35,11 +45,16 @@ const PrayersPage = () => {
       ];
       const currentTime = currentHours * 60 + currentMinutes;
       const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
+      // if the next prayer is after midnight
+      if (prayerTime < currentTime) {
+        // return jajr
+        return key === "Fajr";
+      }
       return prayerTime > currentTime;
     });
 
   const calcHowManyTimeToNextPrayer = () => {
-    if (nextPrayer) {
+    if (nextPrayer && timings) {
       const time = timings[nextPrayer].split(" ")[0];
       const [hours, minutes] = time.split(":");
       const [currentHours, currentMinutes] = [
@@ -51,6 +66,9 @@ const PrayersPage = () => {
       const diff = prayerTime - currentTime;
       const hoursDiff = Math.floor(diff / 60);
       const minutesDiff = diff % 60;
+      if (hoursDiff < 0 || minutesDiff < 0) {
+        return `${24 + hoursDiff}س و ${60 + minutesDiff}د`;
+      }
       return `${hoursDiff}س و ${minutesDiff}د`;
     }
   };
@@ -83,11 +101,11 @@ const PrayersPage = () => {
           {!isLoading && error && (
             <Text className="text-center mt-6 ">{error}</Text>
           )}
-          {nextPrayer !== "Sunrise" && (
+          {nextPrayer && timings && nextPrayer !== "Sunrise" && (
             <View className="items-end mt-6">
               <View className="flex flex-row gap-1">
                 <View>
-                  {timings && (
+                  {nextPrayer && timings && (
                     <Text className="text-primary font-cairoBold">
                       {calcHowManyTimeToNextPrayer()}
                     </Text>

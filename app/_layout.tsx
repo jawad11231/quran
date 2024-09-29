@@ -131,6 +131,7 @@ export default function RootLayout() {
           <Stack.Screen name="prayersPage" options={{ headerShown: false }} />
           <Stack.Screen name="qiblaPage" options={{ headerShown: false }} />
           <Stack.Screen name="sabhaPage" options={{ headerShown: false }} />
+          <Stack.Screen name="quranPage" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
         <PortalHost />
