@@ -3,6 +3,7 @@ import { Text } from "@/components/ui/text";
 import { images } from "@/constants/indxe";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { cn } from "@/lib/utils";
+import { useQuranStore } from "@/store";
 import useGetPrayersTime from "@/utils/useGetPrayersTime";
 import { router } from "expo-router";
 import { ArrowRight } from "lucide-react-native";

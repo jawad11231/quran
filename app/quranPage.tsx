@@ -1,10 +1,16 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { images } from "@/constants/indxe";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { cn } from "@/lib/utils";
-import { getAyatNumberBySuar, getSuar } from "@/services/SurahsService";
+import {
+  getAyatNumberBySuar,
+  getSuar,
+  getSuraWithAyat,
+} from "@/services/SurahsService";
+import { getSaveQuran, storeQuran } from "@/store";
 import axios from "axios";
 import { router } from "expo-router";
 import { ArrowRight, Search } from "lucide-react-native";
@@ -36,8 +42,29 @@ const QuranPage = () => {
     staleTime: Infinity,
   });
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
+  const [saveSurah, setSaveSurah] = useState<string | undefined>(undefined);
+  const [saveAyah, setSaveAyah] = useState<number | undefined>(undefined);
+  const [saveNumber, setSaveNumber] = useState<number | undefined>(undefined);
 
-  //   console.log(data);
+  const saveQuran = getSaveQuran();
+
+  // useEffect(() => {
+  //   if (saveQuran) {
+  //     saveQuran.then((res) => {
+  //       setSaveSurah(res?.surah);
+  //       setSaveAyah(res?.ayah);
+  //       setSaveNumber(res?.number);
+  //     });
+  //   }
+  // }, [saveQuran]);
+
+  saveQuran.then((res) => {
+    setSaveSurah(res?.surah);
+    setSaveAyah(res?.ayah);
+    setSaveNumber(res?.number);
+  });
+
+  console.log(saveSurah, saveAyah, saveNumber);
 
   const [surahs, setSurahs] = useState<surah | undefined>(
     data ? { data } : undefined
@@ -106,18 +133,28 @@ const QuranPage = () => {
                 <View className="flex flex-col justify-between h-full">
                   <View className="flex flex-col">
                     <Text className="text-lg font-cairoBold text-white">
-                      آخر ما تم قراءته
+                      {saveSurah
+                        ? "آخر ما تم قراءته"
+                        : "ابدا بختم القرآن الكريم"}
                     </Text>
-                    <Text className="text-white font-cairoSemiBold">
-                      اخر سورة تمت قراءتها في التطبيق
-                    </Text>
+                    {saveSurah && (
+                      <TouchableOpacity
+                        onPress={() => {
+                          router.push(`/surah/${saveNumber}`);
+                        }}
+                      >
+                        <Text className="text-white font-cairoSemiBold">
+                          {saveSurah && "للمتابعة من حيث توقفت أضغط هنا"}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
                   </View>
                   <View className="flex flex-col">
                     <Text className="text-lg font-cairoBold text-white">
-                      سور الكهف
+                      {saveSurah && saveSurah}
                     </Text>
                     <Text className="text-white font-cairoSemiBold">
-                      الآية 110
+                      {saveAyah && saveAyah} {saveAyah && "عدد آياتها"}
                     </Text>
                   </View>
                 </View>
@@ -160,6 +197,11 @@ const QuranPage = () => {
                     )}
                     onPress={() => {
                       router.push(`/surah/${item.number}`);
+                      const ayat = getAyatNumberBySuar(item.number);
+                      storeQuran(item.number, item.name_ar, ayat);
+                      // setSaveAyah(ayat);
+                      // setSaveSurah(item.name_ar);
+                      // setSaveNumber(item.number.toString());
                     }}
                   >
                     <View>

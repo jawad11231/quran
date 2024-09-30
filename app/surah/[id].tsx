@@ -23,7 +23,7 @@ const surah = () => {
   const local = useLocalSearchParams();
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
-  console.log(local);
+  // console.log(local);
 
   const [openedModal, setOpenModal] = useState(false);
   const [selectedAyah, setSelectedAyah] = useState<Ayah>();

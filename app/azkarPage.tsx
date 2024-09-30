@@ -277,7 +277,7 @@ const azkarPage = () => {
                     }}
                   >
                     <View className="w-full flex flex-row justify-between">
-                      <ChevronLeft />
+                      <ChevronLeft color={"#D59A29"} />
                       <Text className="text-right text-2xl">
                         {category.cat_name}
                       </Text>

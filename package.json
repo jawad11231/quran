@@ -60,6 +60,7 @@
     "expo-navigation-bar": "^3.0.7",
     "expo-network": "^6.0.1",
     "expo-router": "~3.5.23",
+    "expo-secure-store": "^13.0.2",
     "expo-sensors": "~13.0.9",
     "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",

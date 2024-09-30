@@ -20,6 +20,7 @@ import { MapPin, Settings2, SettingsIcon } from "lucide-react-native";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { cn } from "@/lib/utils";
+import { getAddress, saveAddress } from "@/store";
 
 type Timings = {
   Fajr: string;
@@ -41,6 +42,26 @@ const Page = () => {
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
     "Location Loading....."
   );
+
+  const getSaveAddress = getAddress().then((res) => {
+    return res;
+  });
+
+  // useEffect(() => {
+  //   if (getSaveAddress) {
+  //     const value = getSaveAddress.then((res) => {
+  //       setDisplayCurrentAddress(res || "Location Loading.....");
+  //     });
+  //     console.log(value);
+  //   }
+  // });
+
+  getSaveAddress.then((res) => {
+    if (displayCurrentAddress !== res) {
+      setDisplayCurrentAddress(res || "Location Loading.....");
+    }
+  });
+
   const [locationServicesEnabled, setLocationServicesEnabled] = useState(false);
   useEffect(() => {
     checkIfLocationEnabled();
@@ -99,6 +120,7 @@ const Page = () => {
       //loop on the responce to get the actual result
       for (let item of responce) {
         let address = `${item.city}, ${item.country}`;
+        saveAddress(address);
         setDisplayCurrentAddress(address);
       }
     }
