@@ -12,6 +12,8 @@ import { moderateScale } from "react-native-size-matters";
 import { Subscription } from "expo-sensors/build/Pedometer";
 import { Motion } from "@legendapp/motion";
 import { images } from "@/constants/indxe";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { cn } from "@/lib/utils";
 
 export const useQiblaCompass = () => {
   const [subscription, setSubscription] = useState<Subscription | null>();
@@ -144,123 +146,116 @@ const QiblaCompass = forwardRef<
     textStyles: any;
     compassImage?: string;
   }
->(
-  (
-    {
-      backgroundColor = "transparent",
-      color = "#000",
-      textStyles = {},
-      compassImage,
+>(({ backgroundColor, color, textStyles = {}, compassImage }, ref) => {
+  const {
+    qiblad,
+    compassDirection,
+    compassDegree,
+    compassRotate,
+    kabaRotate,
+    error,
+    isLoading,
+    reinitCompass,
+  } = useQiblaCompass();
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        reinitCompass,
+      };
     },
-    ref
-  ) => {
-    const {
-      qiblad,
-      compassDirection,
-      compassDegree,
-      compassRotate,
-      kabaRotate,
-      error,
-      isLoading,
-      reinitCompass,
-    } = useQiblaCompass();
+    []
+  );
+  const { colorScheme, isDarkColorScheme } = useColorScheme();
 
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          reinitCompass,
-        };
-      },
-      []
-    );
-
-    if (isLoading) {
-      return (
-        <View style={[styles.container, { backgroundColor }]}>
-          <ActivityIndicator size={50} color={color} />
-        </View>
-      );
-    }
-
+  if (isLoading) {
     return (
       <View style={[styles.container, { backgroundColor }]}>
-        {error && (
-          <Text
-            style={{
-              color: "#f00",
-              fontWeight: "bold",
-              textAlign: "center",
-              paddingHorizontal: 20,
-              fontSize: moderateScale(16, 0.25),
-              ...textStyles,
-            }}
-          >
-            Error: {error}
-          </Text>
-        )}
-        <View style={styles.direction}>
-          <Text style={[styles.directionText, { color, ...textStyles }]}>
-            {compassDirection}
-          </Text>
-          <Text
-            style={[
-              styles.directionText,
-              {
-                color:
-                  compassDegree >= Math.round(qiblad - 4) &&
-                  compassDegree <= Math.round(qiblad + 4)
-                    ? "green"
-                    : color,
-                ...textStyles,
-              },
-            ]}
-          >
-            {compassDegree}°
-          </Text>
-        </View>
-        <View
-          style={{
-            width: "100%",
-            height: moderateScale(300, 0.25),
-            position: "relative",
-          }}
-        >
-          <Motion.Image
-            animate={{ rotate: compassRotate + "deg" }}
-            source={images.compass}
-            style={[styles.image]}
-          />
-          <Motion.View
-            animate={{ rotate: `${kabaRotate}deg` }}
-            style={{
-              width: moderateScale(300, 0.25),
-              height: moderateScale(300, 0.25),
-              position: "absolute",
-              alignSelf: "center",
-              flexDirection: "row",
-              justifyContent: "center",
-              zIndex: 999,
-            }}
-          >
-            <Image
-              source={require("@/assets/images/kaba.png")}
-              style={{
-                resizeMode: "center",
-                height: 200,
-                paddingBottom: 230,
-                marginTop: 25,
-                marginRight: 13,
-                width: 200,
-                zIndex: 999,
-              }}
-            />
-          </Motion.View>
-        </View>
+        <ActivityIndicator size={50} color={color} />
       </View>
     );
   }
-);
+
+  return (
+    <View style={[styles.container, { backgroundColor }]}>
+      {error && (
+        <Text
+          style={{
+            color: isDarkColorScheme ? "white" : "black",
+            fontWeight: "bold",
+            textAlign: "center",
+            paddingHorizontal: 20,
+            fontSize: moderateScale(16, 0.25),
+            ...textStyles,
+          }}
+        >
+          Error: {error}
+        </Text>
+      )}
+      <View style={styles.direction}>
+        {/* <Text
+          style={[styles.directionText, { color, ...textStyles }]}
+          className={cn("", isDarkColorScheme ? "text-white" : "text-black")}
+        >
+          {compassDirection}
+        </Text> */}
+        {/* <Text
+          style={[
+            {
+              color:
+                compassDegree >= Math.round(qiblad - 4) &&
+                compassDegree <= Math.round(qiblad + 4)
+                  ? "green"
+                  : color,
+              ...textStyles,
+            },
+          ]}
+        >
+          {compassDegree}°
+        </Text> */}
+      </View>
+      <View
+        style={{
+          width: "100%",
+          height: moderateScale(300, 0.25),
+          position: "relative",
+        }}
+      >
+        <Motion.Image
+          animate={{ rotate: compassRotate + "deg" }}
+          source={images.compass}
+          style={[styles.image]}
+        />
+        <Motion.View
+          animate={{ rotate: `${kabaRotate}deg` }}
+          style={{
+            width: moderateScale(300, 0.25),
+            height: moderateScale(300, 0.25),
+            position: "absolute",
+            alignSelf: "center",
+            flexDirection: "row",
+            justifyContent: "center",
+            zIndex: 999,
+          }}
+        >
+          <Image
+            source={require("@/assets/images/kaba.png")}
+            style={{
+              resizeMode: "center",
+              height: 200,
+              paddingBottom: 230,
+              marginTop: 25,
+              marginRight: 13,
+              width: 200,
+              zIndex: 999,
+            }}
+          />
+        </Motion.View>
+      </View>
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   image: {
@@ -272,11 +267,11 @@ const styles = StyleSheet.create({
     height: moderateScale(300, 0.25),
   },
   container: {
-    backgroundColor: "#f00",
+    // backgroundColor: "#f00",
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
-    height: "70%",
+    height: "100%",
   },
   direction: {
     textAlign: "center",
@@ -286,7 +281,7 @@ const styles = StyleSheet.create({
   directionText: {
     textAlign: "center",
     fontSize: 30,
-    color: "#468773",
+    // color: "#468773",
   },
   qiblaDirection: {
     flexDirection: "row",

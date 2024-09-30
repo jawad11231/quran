@@ -10,4 +10,10 @@ export const getSuraWithAyat = (id: number) => {
 export const getSuar = () => {
   return surahsData;
 };
-export default { getSuraWithAyat, getSuar };
+
+export const getAyatNumberBySuar = (id: number) => {
+  return ayatData.filter((aya) => aya.sora === id).map((aya) => aya.aya_no)
+    .length;
+};
+
+export default { getSuraWithAyat, getSuar, getAyatNumberBySuar };

@@ -32,8 +32,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { router } from "expo-router";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 const Sabha = () => {
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
   const [count, setCount] = useState(0);
   const [target, setTarget] = useState<number | undefined>(0);
   const insets = useSafeAreaInsets();
@@ -45,7 +47,12 @@ const Sabha = () => {
   };
 
   return (
-    <SafeAreaView className="relative">
+    <SafeAreaView
+      className={cn(
+        "relative",
+        isDarkColorScheme ? "bg-background" : "bg-white"
+      )}
+    >
       <View className="flex flex-row justify-between w-full">
         <View></View>
         <View
@@ -55,8 +62,16 @@ const Sabha = () => {
           }}
         >
           <Text className="text-lg font-cairoBold">سبحة</Text>
-          <View className="bg-black rounded-full h-5 w-5 flex items-center justify-center">
-            <ArrowRight size={14} color="white" />
+          <View
+            className={cn(
+              "rounded-full h-5 w-5 flex items-center justify-center",
+              isDarkColorScheme ? "bg-white" : "bg-black"
+            )}
+          >
+            <ArrowRight
+              size={14}
+              color={isDarkColorScheme ? "black" : "white"}
+            />
           </View>
         </View>
       </View>
@@ -104,6 +119,10 @@ const Sabha = () => {
                 className={cn(
                   "text-9xl leading-tight font-cairoBold flex p-0 pt-10",
                   (target && count === target) || (target && target < count)
+                    ? isDarkColorScheme
+                      ? "text-black"
+                      : "text-white"
+                    : isDarkColorScheme
                     ? "text-white"
                     : "text-black"
                 )}

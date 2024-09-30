@@ -19,9 +19,12 @@ import SlideItem from "@/components/SlideItemAzkar";
 import Pagination from "@/components/Pagination";
 import SlideItemAzkar from "@/components/SlideItemAzkar";
 import { ArrowRight } from "lucide-react-native";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { cn } from "@/lib/utils";
 
 const AzkarCategory = () => {
   const local = useLocalSearchParams();
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
   const { data, isLoading } = useQuery(
     `azkar${local.category}`,
@@ -59,7 +62,9 @@ const AzkarCategory = () => {
   ).current;
 
   return (
-    <SafeAreaView className="">
+    <SafeAreaView
+      className={cn("", isDarkColorScheme ? "bg-background" : "bg-white")}
+    >
       {/* <Header
         title={local.category as string}
         chevronTitle="اذكار"
@@ -72,8 +77,13 @@ const AzkarCategory = () => {
         }}
       >
         <Text className="text-lg font-cairoBold">الأذكار</Text>
-        <View className="bg-black rounded-full h-5 w-5 flex items-center justify-center">
-          <ArrowRight size={14} color="white" />
+        <View
+          className={cn(
+            "rounded-full h-5 w-5 flex items-center justify-center",
+            isDarkColorScheme ? "bg-white" : "bg-black"
+          )}
+        >
+          <ArrowRight size={14} color={isDarkColorScheme ? "black" : "white"} />
         </View>
       </View>
       <View className="h-full">

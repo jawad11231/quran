@@ -2,6 +2,7 @@ import { Image, View } from "react-native";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Text } from "./ui/text";
 import { cn } from "@/lib/utils";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 export function Prayer({
   title,
@@ -12,9 +13,13 @@ export function Prayer({
   value: string;
   nextPrayer: string;
 }) {
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
+
   return (
     <View
-      className={`bg-white flex-row justify-between items-center text-center bg-lotion dark:bg-blackCoral p-5 pt-6 rounded-xl mt-5 ${
+      className={`${
+        isDarkColorScheme ? "bg-muted" : "bg-white"
+      } flex-row justify-between items-center text-center bg-lotion dark:bg-blackCoral p-5 pt-6 rounded-xl mt-5 ${
         nextPrayer === title && "border-2 border-primary"
       }`}
     >

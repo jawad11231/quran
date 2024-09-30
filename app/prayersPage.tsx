@@ -1,6 +1,8 @@
 import { Prayer } from "@/components/Prayer";
 import { Text } from "@/components/ui/text";
 import { images } from "@/constants/indxe";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { cn } from "@/lib/utils";
 import useGetPrayersTime from "@/utils/useGetPrayersTime";
 import { router } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
@@ -17,6 +19,7 @@ type Timings = {
 };
 
 const PrayersPage = () => {
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
   const { timings, isLoading, error } = useGetPrayersTime() as {
     timings: Timings;
     isLoading: boolean;
@@ -24,17 +27,6 @@ const PrayersPage = () => {
   };
 
   const nextPrayer =
-    // timings &&
-    // (Object.keys(timings) as (keyof Timings)[]).find((key) => {
-    //   const time = timings[key].split(" ")[0];
-    //   const [hours, minutes] = time.split(":");
-    //   const [currentHours, currentMinutes] = [
-    //     new Date().getHours(),
-    //     new Date().getMinutes(),
-    //   ];
-    //   const currentTime = currentHours * 60 + currentMinutes;
-    //   const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
-    //   return prayerTime > currentTime;
     timings &&
     (Object.keys(timings) as (keyof Timings)[]).find((key) => {
       const time = timings[key].split(" ")[0];
@@ -45,12 +37,23 @@ const PrayersPage = () => {
       ];
       const currentTime = currentHours * 60 + currentMinutes;
       const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
-      // if the next prayer is after midnight
-      if (prayerTime < currentTime) {
-        // return jajr
-        return key === "Fajr";
-      }
       return prayerTime > currentTime;
+      // timings &&
+      // (Object.keys(timings) as (keyof Timings)[]).find((key) => {
+      //   const time = timings[key].split(" ")[0];
+      //   const [hours, minutes] = time.split(":");
+      //   const [currentHours, currentMinutes] = [
+      //     new Date().getHours(),
+      //     new Date().getMinutes(),
+      //   ];
+      //   const currentTime = currentHours * 60 + currentMinutes;
+      //   const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
+      //   // if the next prayer is after midnight
+      //   if (prayerTime < currentTime) {
+      //     // return jajr
+      //     return key === "Fajr";
+      //   }
+      //   return prayerTime > currentTime;
     });
 
   const calcHowManyTimeToNextPrayer = () => {
@@ -81,8 +84,13 @@ const PrayersPage = () => {
   }, [calcHowManyTimeToNextPrayer()]);
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
-      <View className="flex-1 bg-gray-100">
+    <SafeAreaView
+      className={cn(
+        "flex-1",
+        isDarkColorScheme ? "bg-background" : "bg-gray-100"
+      )}
+    >
+      <View className="flex-1">
         <View
           className="flex flex-row gap-2 items-center justify-end  px-3 py-4"
           onTouchStart={() => {
@@ -90,8 +98,16 @@ const PrayersPage = () => {
           }}
         >
           <Text className="text-lg font-cairoBold">أوقات الصلاة</Text>
-          <View className="bg-black rounded-full h-5 w-5 flex items-center justify-center">
-            <ArrowRight size={14} color="white" />
+          <View
+            className={cn(
+              "rounded-full h-5 w-5 flex items-center justify-center",
+              isDarkColorScheme ? "bg-white" : "bg-black"
+            )}
+          >
+            <ArrowRight
+              size={14}
+              color={isDarkColorScheme ? "black" : "white"}
+            />
           </View>
         </View>
         <View className="px-5">
@@ -113,7 +129,7 @@ const PrayersPage = () => {
                 </View>
                 <View>
                   {timings && (
-                    <Text className="text-black font-cairoBold">
+                    <Text className="font-cairoBold">
                       متبقى على أذان{" "}
                       {timings && nextPrayer === "Asr"
                         ? "العصر"

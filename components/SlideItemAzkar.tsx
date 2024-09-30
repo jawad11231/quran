@@ -22,6 +22,7 @@ import { Button } from "./ui/button";
 import Swiper from "react-native-swiper";
 import { images } from "@/constants/indxe";
 import { Progress } from "./ui/progress";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -32,6 +33,7 @@ interface SlideItemProps {
 }
 
 const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
   const translateYImage = new Animated.Value(40);
   const [completeCount, setCompleteCount] = React.useState(0);
 
@@ -113,7 +115,15 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
                 {item.description}
               </Text>
               {item.reference !== "" && (
-                <Text style={styles.reference}>({item.reference})</Text>
+                <Text
+                  style={styles.reference}
+                  className={cn(
+                    "",
+                    isDarkColorScheme ? "text-white" : "text-muted-foreground"
+                  )}
+                >
+                  ({item.reference})
+                </Text>
               )}
               {item.count !== 0 && (
                 <View className="border-t border-border flex justify-center items-center p-2 mt-4">
@@ -149,8 +159,9 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
         style={{
           height: 170,
           width: "100%",
-          borderTopColor: "#E5E7EB",
+          borderTopColor: isDarkColorScheme ? "#1a1a1a" : "#E5E7EB",
           borderTopWidth: 1,
+          backgroundColor: isDarkColorScheme ? "#1a1a1a" : "white",
         }}
       >
         <View
@@ -180,7 +191,12 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
                     }
                   }}
                 >
-                  <View className="bg-white rounded-full">
+                  <View
+                    className={cn(
+                      "rounded-full",
+                      isDarkColorScheme ? "bg-muted" : "bg-white"
+                    )}
+                  >
                     <ProgressReact.Circle
                       progress={completeCount / item.count}
                       size={80}
@@ -192,7 +208,6 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
                       }}
                       formatText={() => completeCount}
                       color="#eaa92d"
-                      className="bg-white"
                       borderWidth={1}
                     />
                   </View>
@@ -207,7 +222,10 @@ const SlideItemAzkar = ({ item, itemLength, data }: SlideItemProps) => {
                 setCompleteCount(0);
               }}
             >
-              <RotateCcw size={20} color="black" />
+              <RotateCcw
+                size={20}
+                color={isDarkColorScheme ? "white" : "black"}
+              />
             </TouchableOpacity>
           )}
         </View>
@@ -253,7 +271,7 @@ const styles = StyleSheet.create({
   },
   reference: {
     fontSize: 12,
-    color: "#333",
+    // color: "#333",
     textAlign: "right",
     marginTop: 10,
   },

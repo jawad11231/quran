@@ -2,7 +2,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { images } from "@/constants/indxe";
-import { getSuar } from "@/services/SurahsService";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { cn } from "@/lib/utils";
+import { getAyatNumberBySuar, getSuar } from "@/services/SurahsService";
 import axios from "axios";
 import { router } from "expo-router";
 import { ArrowRight, Search } from "lucide-react-native";
@@ -33,6 +35,7 @@ const QuranPage = () => {
   const { data, isFetched } = useQuery("suar", async () => getSuar(), {
     staleTime: Infinity,
   });
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
   //   console.log(data);
 
@@ -55,8 +58,13 @@ const QuranPage = () => {
   }, [search, data]);
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
-      <ScrollView className="flex-1 bg-gray-100">
+    <SafeAreaView
+      className={cn(
+        "flex-1 ",
+        isDarkColorScheme ? "bg-background" : "bg-gray-100"
+      )}
+    >
+      <ScrollView className="flex-1">
         <View
           className="flex flex-row gap-2 items-center justify-end  px-3 py-4"
           onTouchStart={() => {
@@ -64,8 +72,16 @@ const QuranPage = () => {
           }}
         >
           <Text className="text-lg font-cairoBold">القرآن الكريم</Text>
-          <View className="bg-black rounded-full h-5 w-5 flex items-center justify-center">
-            <ArrowRight size={14} color="white" />
+          <View
+            className={cn(
+              "rounded-full h-5 w-5 flex items-center justify-center",
+              isDarkColorScheme ? "bg-white" : "bg-black"
+            )}
+          >
+            <ArrowRight
+              size={14}
+              color={isDarkColorScheme ? "black" : "white"}
+            />
           </View>
         </View>
         <View className="flex flex-col gap-4 p-4 w-full">
@@ -113,7 +129,10 @@ const QuranPage = () => {
             <View className="flex flex-col gap-4">
               <View className="flex relative">
                 <Input
-                  className="native:h-10 px-10 bg-white"
+                  className={cn(
+                    "native:h-10 px-10",
+                    isDarkColorScheme ? "bg-muted" : "bg-white"
+                  )}
                   placeholder="بحث"
                   value={search}
                   onChangeText={(text) => {
@@ -135,7 +154,10 @@ const QuranPage = () => {
                 {surahs.data.map((item, index) => (
                   <TouchableOpacity
                     key={item.number}
-                    className="bg-white rounded-lg flex flex-row justify-between p-4 items-center"
+                    className={cn(
+                      " rounded-lg flex flex-row justify-between p-4 items-center",
+                      isDarkColorScheme ? "bg-muted" : "bg-white"
+                    )}
                     onPress={() => {
                       router.push(`/surah/${item.number}`);
                     }}
@@ -150,7 +172,10 @@ const QuranPage = () => {
                       <Text className="text-lg font-cairoBold">
                         {item.name_ar}
                       </Text>
-                      <Text className="text-lg font-cairoBold">آية</Text>
+                      <Text className="text-lg font-cairoSemiBold text-muted-foreground">
+                        عدد آياتها {getAyatNumberBySuar(item.number)} -{" "}
+                        {item.type === "Meccan" ? "مكية" : "مدنية"}
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 ))}

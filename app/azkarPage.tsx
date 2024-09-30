@@ -38,6 +38,7 @@ import {
 } from "lucide-react-native";
 import { Input } from "@/components/ui/input";
 import { images } from "@/constants/indxe";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 const azkarPage = () => {
   // const quran = axios.get("http://api.alquran.cloud/v1/quran/ar.asad", {
@@ -48,6 +49,7 @@ const azkarPage = () => {
   //   staleTime: Infinity,
   // });
 
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
   const { t } = useTranslation("home");
 
   const { data, isLoading } = useQuery("category", async () => getCategories());
@@ -77,8 +79,13 @@ const azkarPage = () => {
   }, [search, data]);
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
-      <ScrollView className="flex-1 bg-gray-100">
+    <SafeAreaView
+      className={cn(
+        "flex-1 ",
+        isDarkColorScheme ? "bg-background" : "bg-gray-100"
+      )}
+    >
+      <ScrollView className="flex-1">
         <View
           className="flex flex-row gap-2 items-center justify-end  px-3 py-4"
           onTouchStart={() => {
@@ -86,8 +93,16 @@ const azkarPage = () => {
           }}
         >
           <Text className="text-lg font-cairoBold">الأذكار</Text>
-          <View className="bg-black rounded-full h-5 w-5 flex items-center justify-center">
-            <ArrowRight size={14} color="white" />
+          <View
+            className={cn(
+              "rounded-full h-5 w-5 flex items-center justify-center",
+              isDarkColorScheme ? "bg-white" : "bg-black"
+            )}
+          >
+            <ArrowRight
+              size={14}
+              color={isDarkColorScheme ? "black" : "white"}
+            />
           </View>
         </View>
         <View className="p-2 px-4 flex flex-col gap-4">
@@ -118,6 +133,7 @@ const azkarPage = () => {
               onPress={() => {
                 router.push(`/azkar/أذكار المساء`);
               }}
+              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={[styles.parent, styles.parentFlexBox]}>
                 <Text style={[styles.text2, styles.textTypo]}>
@@ -133,6 +149,7 @@ const azkarPage = () => {
             <TouchableOpacity
               style={[styles.frameGroup, styles.frameFlexBox]}
               onPress={() => router.push(`/azkar/أذكار الصباح`)}
+              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={[styles.parent, styles.parentFlexBox]}>
                 <Text style={[styles.text, styles.textTypo]}>أذكار الصباح</Text>
@@ -149,6 +166,7 @@ const azkarPage = () => {
               onPress={() => {
                 router.push(`/azkar/أذكار الاستيقاظ من النوم`);
               }}
+              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={[styles.parent, styles.parentFlexBox]}>
                 <Text style={[styles.text, styles.textTypo]}>
@@ -166,6 +184,7 @@ const azkarPage = () => {
               onPress={() => {
                 router.push(`/azkar/أذكار النوم`);
               }}
+              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={styles.parentFlexBox}>
                 <Text style={[styles.text2, styles.textTypo]}>أذكار النوم</Text>
@@ -180,7 +199,9 @@ const azkarPage = () => {
               style={[styles.frameGroup, styles.frameFlexBox]}
               onPress={() => {
                 router.push(`/azkar/دعاء الخروج من المسجد`);
+                
               }}
+                              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={styles.parentFlexBox}>
                 <Text style={[styles.text2, styles.textTypo]}>
@@ -198,6 +219,7 @@ const azkarPage = () => {
               onPress={() => {
                 router.push(`/azkar/أذكار الآذان`);
               }}
+                              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={styles.parentFlexBox}>
                 <Text style={[styles.text2, styles.textTypo]}>
@@ -214,7 +236,10 @@ const azkarPage = () => {
           <View>
             <View className="flex px-2 relative">
               <Input
-                className="native:h-10 px-8 bg-white"
+                className={cn(
+                  "native:h-10 px-8",
+                  isDarkColorScheme ? "bg-muted" : "bg-white"
+                )}
                 placeholder="بحث"
                 value={search}
                 onChangeText={(text) => {
@@ -240,10 +265,9 @@ const azkarPage = () => {
                     key={index}
                     variant="outline"
                     className={cn(
-                      "text-2xl w-full bg-white border-b-0 rounded-none shadow-none",
-                      // first item rounded top
+                      "text-2xl w-full  border-b-0 rounded-none shadow-none",
+                      isDarkColorScheme ? "bg-muted" : "bg-white",
                       index === 0 ? "rounded-t-lg border-t" : "",
-                      // last item rounded bottom
                       index === categoryData.length - 1
                         ? "rounded-b-lg border-b"
                         : ""
@@ -283,7 +307,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   textTypo: {
-    color: "#111f20",
+    // color: "#111f20",
     fontFamily: "Alexandria-SemiBold",
     fontWeight: "600",
     lineHeight: 16,
@@ -307,7 +331,7 @@ const styles = StyleSheet.create({
   frameChild: { width: 48, height: 48 },
   frameGroup: {
     borderRadius: 12,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     width: 173,
     height: 120,
     justifyContent: "flex-end",

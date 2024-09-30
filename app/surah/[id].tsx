@@ -15,10 +15,13 @@ import Fav from "@/utils/Favs";
 import { getSuraWithAyat } from "@/services/SurahsService";
 import usePlayAyah from "@/utils/usePlayAyah";
 import { ArrowRight } from "lucide-react-native";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { cn } from "@/lib/utils";
 
 const surah = () => {
   useKeepAwake();
   const local = useLocalSearchParams();
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
   console.log(local);
 
@@ -61,6 +64,14 @@ const surah = () => {
   //     setAyat(ayat);
   //   }
 
+  if (ayat === "" && data) {
+    let ayat = "";
+    data?.ayat.map((ayah, index) => {
+      ayat += `${ayah.aya_text}۝${ayah.aya_no} `;
+    });
+    setAyat(ayat);
+  }
+
   useEffect(() => {
     if (ayat === "") {
       let ayat = "";
@@ -74,8 +85,13 @@ const surah = () => {
   //   console.log(ayat);
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
-      <ScrollView className="flex-1 bg-gray-100">
+    <SafeAreaView
+      className={cn(
+        "flex-1 ",
+        isDarkColorScheme ? "bg-background" : "bg-gray-100"
+      )}
+    >
+      <ScrollView className="flex-1">
         <View
           className="flex flex-row gap-2 items-center justify-end  px-3 py-4"
           onTouchStart={() => {
@@ -83,8 +99,16 @@ const surah = () => {
           }}
         >
           <Text className="text-lg font-cairoBold">القرآن الكريم</Text>
-          <View className="bg-black rounded-full h-5 w-5 flex items-center justify-center">
-            <ArrowRight size={14} color="white" />
+          <View
+            className={cn(
+              "rounded-full h-5 w-5 flex items-center justify-center",
+              isDarkColorScheme ? "bg-white" : "bg-black"
+            )}
+          >
+            <ArrowRight
+              size={14}
+              color={isDarkColorScheme ? "black" : "white"}
+            />
           </View>
         </View>
         <View className="p-4">
@@ -92,9 +116,9 @@ const surah = () => {
             style={{
               padding: 16,
               borderRadius: 16,
-              backgroundColor: "#fdf6ea",
+              backgroundColor: isDarkColorScheme ? "#1a1a1a" : "#fdf6ea",
               borderStyle: "solid",
-              borderColor: "#e4e4e4",
+              borderColor: isDarkColorScheme ? "#1a1a1a" : "#e4e4e4",
               borderWidth: 1,
               flex: 1,
               width: "100%",

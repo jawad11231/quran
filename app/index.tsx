@@ -17,6 +17,9 @@ import { getLocales } from "expo-localization";
 import { getUserLocation } from "@/utils";
 import { useEffect, useState } from "react";
 import { MapPin, Settings2, SettingsIcon } from "lucide-react-native";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { cn } from "@/lib/utils";
 
 type Timings = {
   Fajr: string;
@@ -33,6 +36,7 @@ const Page = () => {
     isLoading: boolean;
     error: string;
   };
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
     "Location Loading....."
@@ -101,17 +105,6 @@ const Page = () => {
   };
 
   const nextPrayer =
-    // timings &&
-    // (Object.keys(timings) as (keyof Timings)[]).find((key) => {
-    //   const time = timings[key].split(" ")[0];
-    //   const [hours, minutes] = time.split(":");
-    //   const [currentHours, currentMinutes] = [
-    //     new Date().getHours(),
-    //     new Date().getMinutes(),
-    //   ];
-    //   const currentTime = currentHours * 60 + currentMinutes;
-    //   const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
-    //   return prayerTime > currentTime
     timings &&
     (Object.keys(timings) as (keyof Timings)[]).find((key) => {
       const time = timings[key].split(" ")[0];
@@ -122,12 +115,23 @@ const Page = () => {
       ];
       const currentTime = currentHours * 60 + currentMinutes;
       const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
-      // if the next prayer is after midnight
-      if (prayerTime < currentTime) {
-        // return jajr
-        return key === "Fajr";
-      }
       return prayerTime > currentTime;
+      // timings &&
+      // (Object.keys(timings) as (keyof Timings)[]).find((key) => {
+      //   const time = timings[key].split(" ")[0];
+      //   const [hours, minutes] = time.split(":");
+      //   const [currentHours, currentMinutes] = [
+      //     new Date().getHours(),
+      //     new Date().getMinutes(),
+      //   ];
+      //   const currentTime = currentHours * 60 + currentMinutes;
+      //   const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
+      //   // if the next prayer is after midnight
+      //   if (prayerTime < currentTime) {
+      //     // return jajr
+      //     return key === "Fajr";
+      //   }
+      //   return prayerTime > currentTime;
     });
 
   const calcHowManyTimeToNextPrayer = () => {
@@ -160,7 +164,12 @@ const Page = () => {
   // console.log("timings", timings);
   // console.log("nextPrayer", nextPrayer);
   return (
-    <ScrollView className="flex-1 bg-gray-100">
+    <ScrollView
+      className={cn(
+        "flex-1 ",
+        isDarkColorScheme ? "bg-background" : "bg-gray-100"
+      )}
+    >
       <View className="flex flex-col gap-4">
         <View className="flex-1">
           <View className="relative w-full h-[319px]">
@@ -171,8 +180,9 @@ const Page = () => {
               <View className="flex flex-col gap-11 pt-16 px-4">
                 <View className="flex flex-row justify-between w-full">
                   <View className="flex flex-row gap-2">
-                    <View className="p-2 h-3/4 bg-white/10 rounded-full">
-                      <SettingsIcon size={16} color="white" />
+                    <View>
+                      {/* <SettingsIcon size={16} color="white" /> */}
+                      <ThemeToggle />
                     </View>
                     <View
                       className="p-2 h-3/4 flex flex-row gap-1 bg-white/10 rounded-full justify-center items-center"
@@ -283,6 +293,7 @@ const Page = () => {
             <TouchableOpacity
               style={[styles.frameGroup, styles.frameFlexBox]}
               onPress={() => router.push("/azkarPage")}
+              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={[styles.parent, styles.parentFlexBox]}>
                 <Text style={[styles.text, styles.textTypo]}>الأذكار</Text>
@@ -297,6 +308,7 @@ const Page = () => {
             <TouchableOpacity
               style={[styles.frameGroup, styles.frameFlexBox]}
               onPress={() => router.push("/quranPage")}
+              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={[styles.parent, styles.parentFlexBox]}>
                 <Text style={[styles.text2, styles.textTypo]}>
@@ -313,6 +325,7 @@ const Page = () => {
             <TouchableOpacity
               style={[styles.frameGroup, styles.frameFlexBox]}
               onPress={() => router.push("/prayersPage")}
+              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={styles.parentFlexBox}>
                 <Text style={[styles.text2, styles.textTypo]}>
@@ -329,6 +342,7 @@ const Page = () => {
             <TouchableOpacity
               style={[styles.frameGroup, styles.frameFlexBox]}
               onPress={() => router.push("/qiblaPage")}
+              className={cn("", isDarkColorScheme ? "bg-muted" : "bg-white")}
             >
               <View style={[styles.parent, styles.parentFlexBox]}>
                 <Text style={[styles.text, styles.textTypo]}>القبلة</Text>
@@ -360,7 +374,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   textTypo: {
-    color: "#111f20",
     fontFamily: "Alexandria-SemiBold",
     fontWeight: "600",
     lineHeight: 16,
@@ -384,7 +397,7 @@ const styles = StyleSheet.create({
   frameChild: { width: 48, height: 48 },
   frameGroup: {
     borderRadius: 12,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     width: 173,
     height: 120,
     justifyContent: "flex-end",
