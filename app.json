@@ -19,10 +19,12 @@
         "forcesRTL": true
       },
       "eas": {
-        "projectId": "148098d1-7e19-4326-9814-dd661a192776"
+        "projectId": "3380fd74-a911-4813-bb1b-78ee903de891"
       }
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.gluestack.expoapp",
@@ -46,7 +48,11 @@
       "ar": "./i18n/locales/ar.json",
       "en": "./i18n/locales/en.json"
     },
-    "plugins": ["expo-router", "expo-font", "expo-localization"],
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-localization"
+    ],
     "experiments": {
       "typedRoutes": true
     },
@@ -56,6 +62,6 @@
     "updates": {
       "url": "https://u.expo.dev/148098d1-7e19-4326-9814-dd661a192776"
     },
-    "owner": "quran"
+    "owner": "jawadaljohani"
   }
 }
