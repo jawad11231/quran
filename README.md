@@ -1,6 +1,6 @@
 # تطبيق القرآن الكريم
 
-تطبيق اوفلاين لقراءة القرآن الكريم تم تطويره باستخدام React Native و Expo
+تطبيق لقراءة القرآن الكريم تم تطويره باستخدام React Native و Expo
 
 ## المميزات :
 
@@ -13,7 +13,7 @@
 
 #
 
-Offline app for reading quran made with react native using expo
+app for reading quran made with react native using expo
 
 ## Features :
 
